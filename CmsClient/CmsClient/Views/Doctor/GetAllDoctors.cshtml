@@ -1,0 +1,95 @@
+﻿@model IEnumerable<CmsClient.Models.Doctor>
+
+@{ ViewData["Title"] = "GetAllDoctors"; }
+@Html.Partial("_Navbarmenu")
+<div class="container">
+    <br />
+    <div>
+        <a class="btn btn-primary btn-lg float-right mb-2" href='@Url.Action("Create","Doctor")'>Add Doctor</a>
+    </div>
+    <br />
+    <br />
+    <div>
+        <table class="table" id="Doctors">
+
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DoctorId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Firstname)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Lastname)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sex)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Specialization)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StartTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EndTime)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DoctorId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Firstname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lastname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sex)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Specialization)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndTime)
+                    </td>
+                    <td class="float-right">
+                        <a  href='@Url.Action("Edit","Doctor",new { id = item.DoctorId } )' class="btn btn-success">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href='@Url.Action("Delete","Doctor",new { id = item.DoctorId } )' class="btn btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>        
+        </table>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://kit.fontawesome.com/3d965b886b.js" crossorigin="anonymous"></script>
+    @*
+    <script src="~/lib/DataTables/DataTables-1.11.3/js/jquery.dataTables.js"></script>
+    <script src="~/lib/DataTables/DataTables-1.11.3/js/dataTables.bootstrap5.js"></script>*@
+    @* for removing class="container" *@
+    <script>
+        $(document).ready(function () {
+            const element = document.querySelector('#container');
+            element.classList.remove('container');
+            /*$("#Doctors").DataTable();*/
+        });</script>
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

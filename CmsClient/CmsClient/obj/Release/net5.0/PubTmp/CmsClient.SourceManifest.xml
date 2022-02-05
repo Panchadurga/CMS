@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Release\net5.0\PubTmp\Out\" />
+  <dbfullsql path="C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Release\net5.0\PubTmp\EFSQLScripts\CMS.Data.CMSContext.sql" />
+</sitemanifest>

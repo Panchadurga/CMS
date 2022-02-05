@@ -1,0 +1,52 @@
+﻿@model CmsClient.Models.UserRegister
+
+@{
+    ViewData["Title"] = "Create";
+}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+@*<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">*@
+
+
+<div class="container">   
+    <div class="card bg-light" style="margin-left:auto; margin-right:auto; margin-top:40px; width:500px;">
+        <img src="/images/signuplogo.png" class="img-fluid mx-auto d-block" style="width:250px;height:200px;border-radius:50%;" alt="image">
+        <article class="card-body mx-auto">
+            <h4 class="card-title mt-3 text-center" style="font-family: Verdana;">Create Account</h4>
+            <form asp-action="Create" style="width:350px;">
+                <div class="form-group input-group mb-3">
+                    <input asp-for="Username" class="form-control" placeholder="User name" type="text">
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div> <!-- form-group// -->
+                <div class="form-group input-group mb-3">
+                    <input asp-for="Firstname" class="form-control" placeholder="First name" type="text">
+                    <span asp-validation-for="Firstname" class="text-danger"></span>
+                </div><!-- form-group// -->
+                <div class="form-group input-group mb-3">
+                    <input asp-for="Lastname" class="form-control" placeholder="Last name" type="text">
+                    <span asp-validation-for="Lastname" class="text-danger"></span>
+                </div><!-- form-group// -->
+                <div class="form-group input-group mb-3">
+                    <input asp-for="Email" class="form-control" placeholder="Email address" type="email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div> <!-- form-group// -->
+                <div class="form-group input-group mb-3">
+                    <input asp-for="Password" class="form-control" placeholder="Password" type="password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                    <button type="submit" value="Create" class="btn btn-primary btn-block">Register</button>
+                </div> <!-- form-group// -->
+            </form>
+        </article>
+    </div> <!-- card.// -->
+</div>
+<!--container end.//-->
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

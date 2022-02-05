@@ -1,0 +1,9 @@
+﻿@model CmsClient.Models.Patient
+<div>
+    <label asp-for="Age" class="control-label"></label>
+    <input asp-for="Age" value= "@ViewBag.age" class="form-control" readonly>
+    <br />
+    <div class="form-group">
+        <input type="submit" value="Add Patient" class="btn btn-primary" />
+    </div>
+</div>

@@ -1,0 +1,85 @@
+﻿@model IEnumerable<CmsClient.Models.Patient>
+
+@{ ViewData["Title"] = "GetAllPatients"; }
+@Html.Partial("_Navbarmenu")
+<div class="container">
+    <br />
+    <div>
+        <a class="btn btn-primary btn-lg float-right mb-2" href='@Url.Action("Create","Patient")'>Add Patient</a>
+    </div>
+    <br />
+    <br />
+    <div>
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PatientId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Firstname)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Lastname)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sex)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DOB)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Age)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PatientId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Firstname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Lastname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sex)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DOB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Age)
+                        </td>
+                        <td class="float-right">
+                            <a href='@Url.Action("Edit","Patient",new { id = item.PatientId } )' class="btn btn-success">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href='@Url.Action("Delete","Patient",new { id = item.PatientId } )' class="btn btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                 }
+            </tbody>
+        </table>
+
+    </div>
+    
+</div>
+
+@section Scripts {
+    @* for removing class="container" *@
+    <script>
+    $(document).ready(function () {
+            const element = document.querySelector('#container');
+            element.classList.remove('container');
+        });</script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

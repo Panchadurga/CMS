@@ -1,0 +1,64 @@
+﻿@model CmsClient.Models.Login
+
+@{ ViewData["Title"] = "Login"; 
+ }
+<div>
+    <h1 style="color:blueviolet; text-align:center;"><i><b>The Stone Clinic App</b></i></h1>
+</div>
+
+@*<input asp-for="ErrorMessage" hidden />*@
+<section class="vh-200">
+    <div class="container-fluid" style=" margin-top:10%; border: 1px solid white; box-shadow: 0 0 8px #808080 ;border-radius: 12px;">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="/images/medical_care.png" class="img-fluid"
+                     alt="Sample image">
+            </div>
+            <form asp-action="Login">
+                
+                <div class="text-center mt-3">
+                    <img style="width:70px;height:70px;border-radius:50px;" src="/images/Stone-Clinic-Logo.jpg" class="img-fluid"
+                         alt="Sample image">
+                </div>
+                <span asp-validation-for="ErrorMessage" style="font-weight:600;color:red;margin-left:15px;"></span>
+                <!-- User Name input -->
+                <div class="form-outline mb-4 mt-3">
+                    <input asp-for="Username" type="text" class="form-control form-control-lg"
+                           placeholder="Username" required />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+
+                <!-- Password input -->
+                <div class="form-outline mb-3">
+                    <input asp-for="Password" type="password" class="form-control form-control-lg"
+                           placeholder="Password" required />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="text-center text-lg-start pl-5 mt-2" style="display:inline-block;">
+                    <button type="submit" class="btn btn-primary" style="margin-right:5px;padding-left: 2.5rem; padding-right: 2.5rem;">
+                        Login
+                    </button>
+                    <button type="reset" class="btn btn-success" style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                        Reset
+                    </button>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <a href='@Url.Action("Forgotpassword", "User")' style="margin-left:auto;margin-right:auto; font-size: 16px;font-family: Verdana;" class="text-body">Forgot password?</a>
+                </div>
+
+
+                <div class="pt-2">
+                    <p style="font-size: 16px; margin-left: auto; margin-right: auto; font-family: Verdana;">
+                        Don't have an account? <a href='@Url.Action("Create", "User")' style="color:red">Register</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

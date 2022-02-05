@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAhH++JmXcCU+SyLdT1BAfnAAAAAACAAAAAAAQZgAAAAEAACAAAABH+5/tzO5gYTpaNij/8zlau2SiVVkfmc3Twn8E35TzpQAAAAAOgAAAAAIAACAAAADvr6mNF+dYDbAZGKtV6IA1acWviNQWY2KXodnUMO7yjoAAAACRS39ijXuCCCaZyxRdn82avU19BsBId14f1MpqcZxL71ZctH4T8Sjr4+qNdVPbVM/Piff3LRpweZUwsdpah3+l91aMN6zWd7LnLhRHlyrZapSJAIsrnFJRDbFmxF/wngkyPPP4YwgZ482GZPLGgHJYMbHReBASPJIMM6Dyk5BtHkAAAADjO8vFDJRYuqOmGTQrPS6u5NZ/EdbsXDxeAAOjdEqt8lGwirkmVZVkqyB6QdCA8iryTdA9l+I3m0t9DPe6R9p1</EncryptedPassword>
+    <History>True|2022-01-27T11:55:37.7713264Z;</History>
+  </PropertyGroup>
+  <ItemGroup>
+    <EFMigrations Include="CMS.Data.CMSContext">
+      <Value>Data Source=tcp:cessqlserver.database.windows.net,1433%3bInitial Catalog=CMSProjectDB%3bUser Id=cessqlserveradmin%40cessqlserver%3bPassword=Flowerbell123%24</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

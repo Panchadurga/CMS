@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            width: 100%;
+            padding: 32px;
+            box-sizing: border-box;
+            height: 720px;
+            padding-left: 5%;
+            padding-right: 5%;
+            background-image: url('http://vertassets.blob.core.windows.net/image/686d4240/686d4240-cf88-4b3f-a163-a4bad730a6f4/pulse_line_background_2.jpg');
+            background-repeat: no-repeat;
+            /* background-position: top; */
+            background-size: cover;
+        }
+
+
+        /* Fixed sidenav, full height */
+        .sidenav {
+            height: 100%;
+            width: 350px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: whitesmoke;
+            overflow-x: hidden;
+            padding-top: 20px;
+            box-shadow: 8px 8px 8px dodgerblue;
+        }
+
+        /* Style the sidenav links and the dropdown button */
+        .sidenav a, .dropdown-btn {
+          padding:18px;
+          text-decoration: none;
+          font-size: 24px;
+          font-weight:600;
+          color: dodgerblue;
+          display: block;
+          border: none;
+          background: none;
+          width: 100%;
+          text-align: left;
+          cursor: pointer;
+          outline: none;
+        }
+
+        /* On mouse-over */
+        .sidenav a:hover, .dropdown-btn:hover {
+          color:green;
+        }
+
+        /* Main content */
+        .main {
+          margin-left: 200px; /* Same as the width of the sidenav */
+          font-size: 20px; /* Increased text to enable scrolling */
+          padding: 0px 10px;
+        }
+
+        /* Add an active class to the active dropdown button */
+        .active {
+          background-color:Highlight;
+          color: darkblue;
+        }
+
+        /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+        .dropdown-container {
+            display: none;
+            background-color: whitesmoke;
+            padding-left: 8px;
+        }
+
+        /*Style icon picture*/
+        .icon-spacing {
+            margin:8px;
+            padding:4px;
+        }
+        /* Optional: Style the caret down icon */
+        .fa-caret-down {
+          float: right;
+          padding-right: 8px;
+        }
+        #img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        /* Some media queries for responsiveness */
+        @@media screen and (max-height: 450px) {
+          .sidenav {padding-top: 15px;}
+          .sidenav a {font-size: 18px;}
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidenav">
+        <div class="text-center">
+            <img id="img" src="/images/Stone-Clinic-Logo.jpg" class="img-fluid"
+                 alt="Sample image">
+        </div>
+        <a href='@Url.Action("Index", "Dashboard")'><i class="fas fa-home icon-spacing"></i>Home</a>
+        <button class="dropdown-btn">
+            <i class="fas fa-user-md icon-spacing"></i>Doctors<i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href='@Url.Action("GetAllDoctors", "Doctor")'>All Doctors</a>
+            <a href='@Url.Action("Create", "Doctor")'>Add Doctor</a>
+        </div>
+        <button class="dropdown-btn">
+            <i class="fas fa-user-injured icon-spacing"></i>Patients<i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href='@Url.Action("GetAllPatients", "Patient")'>All Patients</a>
+            <a href='@Url.Action("Create", "Patient")'>Add Patient</a>
+        </div>
+        <button class="dropdown-btn">
+            <i class="fas fa-calendar-check icon-spacing"></i>Book Appointments<i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href='@Url.Action("ViewAppointments", "Appointment")'>View All Appointments</a>
+            <a href='@Url.Action("Choosedoctor", "ChooseDoctor")'>Book Appointment</a>
+        </div>
+        <a href='@Url.Action("Login", "Login")'><i class="fas fa-sign-out-alt icon-spacing"></i>Log out</a>
+    </div>
+
+    <div class="main">
+        <h2 style="text-align:center;color:midnightblue;font-weight:800"><i>Welcome @ViewBag.user !</i></h2>
+    </div>
+
+    <script>
+        /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content 
+         * - This allows the user to have multiple dropdowns without any conflict */
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
