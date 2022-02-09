@@ -38,6 +38,7 @@ namespace CmsClient.Helpers
                 var mailMessage = new MailMessage(from, to);
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
+                mailMessage.IsBodyHtml = true;
                 smtpClient.Send(mailMessage);
                 return true;
             }

@@ -1,63 +1,176 @@
 ﻿@model CmsClient.Models.Login
 
-@{ ViewData["Title"] = "Login"; 
- }
-<div>
-    <h1 style="color:blueviolet; text-align:center;"><i><b>The Stone Clinic App</b></i></h1>
-</div>
+@{ ViewData["Title"] = "Login"; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-@*<input asp-for="ErrorMessage" hidden />*@
-<section class="vh-200">
-    <div class="container-fluid" style=" margin-top:10%; border: 1px solid white; box-shadow: 0 0 8px #808080 ;border-radius: 12px;">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-9 col-lg-6 col-xl-5">
-                <img src="/images/medical_care.png" class="img-fluid"
-                     alt="Sample image">
-            </div>
-            <form asp-action="Login">
-                
-                <div class="text-center mt-3">
-                    <img style="width:70px;height:70px;border-radius:50px;" src="/images/Stone-Clinic-Logo.jpg" class="img-fluid"
-                         alt="Sample image">
-                </div>
-                <span asp-validation-for="ErrorMessage" style="font-weight:600;color:red;margin-left:15px;"></span>
-                <!-- User Name input -->
-                <div class="form-outline mb-4 mt-3">
-                    <input asp-for="Username" type="text" class="form-control form-control-lg"
-                           placeholder="Username" required />
-                    <span asp-validation-for="Username" class="text-danger"></span>
-                </div>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            color: #fff;
+        }
 
-                <!-- Password input -->
-                <div class="form-outline mb-3">
-                    <input asp-for="Password" type="password" class="form-control form-control-lg"
-                           placeholder="Password" required />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="text-center text-lg-start pl-5 mt-2" style="display:inline-block;">
-                    <button type="submit" class="btn btn-primary" style="margin-right:5px;padding-left: 2.5rem; padding-right: 2.5rem;">
-                        Login
-                    </button>
-                    <button type="reset" class="btn btn-success" style="padding-left: 2.5rem; padding-right: 2.5rem;">
-                        Reset
-                    </button>
-                </div>
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                    <a href='@Url.Action("Forgotpassword", "User")' style="margin-left:auto;margin-right:auto; font-size: 16px;font-family: Verdana;" class="text-body">Forgot password?</a>
-                </div>
+        .form-box {
+            background-color: rgba(0, 0, 0, 0.5);
+            margin: auto auto;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #000;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 520px;
+            height: 500px;
+        }
+
+            .form-box:before {
+                background-image: url("https://i.pinimg.com/736x/20/42/ae/2042aec9a2df42dab4a12d80a884730d.jpg");
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                content: "";
+                position: fixed;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                z-index: -1;
+                display: block;
+                /*filter: blur(2px);*/
+            }
 
 
-                <div class="pt-2">
-                    <p style="font-size: 16px; margin-left: auto; margin-right: auto; font-family: Verdana;">
-                        Don't have an account? <a href='@Url.Action("Create", "User")' style="color:red">Register</a>
-                    </p>
-                </div>
-            </form>
+            .form-box input {
+                margin: 10px 0px;
+                border: none;
+                padding: 10px;
+                border-radius: 5px;
+                width: 100%;
+                font-size: 18px;
+                font-family: 'Montserrat', sans-serif;
+            }
+
+
+            .form-box span {
+                font-size: 14px;
+            }
+
+            .form-box button {
+                background-color: deepskyblue;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                display: inline-block;
+                width: 180px;
+                font-size: 18px;
+                padding: 10px;
+                margin: 20px 10px;
+            }
+        .text-color {
+            color: goldenrod;
+        }
+        .text-content {
+            font-size: 18px;
+        }
+
+            .text-content a {
+                color: limegreen;
+                font-size: 18px;
+                font-weight: 600;
+            }
+    </style>
+</head>
+<body>
+    @if (ViewBag.UpdateMessage != null)
+    {
+        <div class="bg-success">
+            <label>@ViewBag.UpdateMessage</label>
         </div>
-    </div>
-</section>
+    }
+    <form asp-action="Login" id="loginform">
+
+        <div class="form-box">
+            <h2 style="text-align: center;">Sign in</h2>
+            <span asp-validation-for="ErrorMessage" style="text-align:center; font-size:20px;font-weight:600;color:goldenrod;margin-left:15px;"></span>
+            <div>
+                <label asp-for="Username" class="control-label"></label><span class="text-danger">*</span>
+                <input id="username" asp-for="Username" type="text" class="form-control form-control-lg"
+                       placeholder="Username" required />
+                <span asp-validation-for="Username" class="text-color"></span>
+            </div>
+            <div>
+                <label asp-for="Password" class="control-label"></label><span class="text-danger">*</span>
+                <input id="password" asp-for="Password" type="password" class="form-control form-control-lg"
+                       placeholder="Password" required />
+                <span asp-validation-for="Password" class="text-color"></span>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">
+                    Login
+                </button>
+                @*<input type="button" value="Reset" onclick="clearResult()"/>*@
+                <button type="button" class="btn btn-success"  onclick="resetbtn()">
+                    Reset
+                </button>
+            </div>
+            <div class="text-black-50 text-content">
+                <a href='@Url.Action("Forgotpassword", "User")' class="text-body">Forgot password?</a>
+            </div>
+            <div class="pt-2 text-content">
+                Don't have an account? <a href='@Url.Action("Create", "User")'>Register</a>
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>
+
+
 
 @section Scripts {
+    <script>
+        function resetbtn() {
+            document.getElementById("loginform").reset();
+            
+        };
+        
+        $(document).ready(function () {
+            const pw = document.querySelector('#password');
+            const form = document.querySelector('#loginform');
+            pw.addEventListener('keydown', function (event) {
+                if (event.keyCode === 13) {
+                    form.submit();
+                }
+
+            });
+            document.addEventListener('keydown', function (event) {
+                if (event.keyCode === 13 && event.target.nodeName === 'INPUT') {
+                    event.preventDefault();
+                    var form = event.target.form;
+                    var index = Array.prototype.indexOf.call(form, event.target);
+                    form.elements[index + 1].focus();
+
+
+                }
+            });
+
+        });
+
+    </script>
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 

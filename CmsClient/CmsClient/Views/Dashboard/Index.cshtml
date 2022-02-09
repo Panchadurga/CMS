@@ -12,7 +12,7 @@
             height: 720px;
             padding-left: 5%;
             padding-right: 5%;
-            background-image: url('http://vertassets.blob.core.windows.net/image/686d4240/686d4240-cf88-4b3f-a163-a4bad730a6f4/pulse_line_background_2.jpg');
+            background-image: url('https://res.cloudinary.com/jerrick/image/upload/v1603482873/5f9334f9b16068001dae9e4b.jpg');
             background-repeat: no-repeat;
             /* background-position: top; */
             background-size: cover;
@@ -27,10 +27,11 @@
             z-index: 1;
             top: 0;
             left: 0;
-            background-color: whitesmoke;
+            background-color: skyblue;
             overflow-x: hidden;
             padding-top: 20px;
-            box-shadow: 8px 8px 8px dodgerblue;
+            border: none;
+           
         }
 
         /* Style the sidenav links and the dropdown button */
@@ -39,7 +40,7 @@
           text-decoration: none;
           font-size: 24px;
           font-weight:600;
-          color: dodgerblue;
+          color: #0f0808;
           display: block;
           border: none;
           background: none;
@@ -101,10 +102,10 @@
 <body>
 
     <div class="sidenav">
-        <div class="text-center">
+        @*<div class="text-center">
             <img id="img" src="/images/Stone-Clinic-Logo.jpg" class="img-fluid"
                  alt="Sample image">
-        </div>
+        </div>*@
         <a href='@Url.Action("Index", "Dashboard")'><i class="fas fa-home icon-spacing"></i>Home</a>
         <button class="dropdown-btn">
             <i class="fas fa-user-md icon-spacing"></i>Doctors<i class="fa fa-caret-down"></i>

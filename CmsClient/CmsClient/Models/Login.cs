@@ -9,10 +9,10 @@ namespace CmsClient.Models
     public class Login
     {
         [Key]
-        [Required(ErrorMessage = "Required")]
+        [Required(ErrorMessage = "Mandatory field")]
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "Required")]
+        [Required(ErrorMessage = "Mandatory field")]
         public string Password { get; set; }
 
         

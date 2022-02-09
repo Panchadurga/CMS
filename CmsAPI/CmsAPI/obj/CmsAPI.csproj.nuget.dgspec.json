@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CMS\\CMS\\CmsAPI.csproj": {}
+    "C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CmsAPI\\CmsAPI\\CmsAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CMS\\CMS\\CmsAPI.csproj": {
+    "C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CmsAPI\\CmsAPI\\CmsAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CMS\\CMS\\CmsAPI.csproj",
+        "projectUniqueName": "C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CmsAPI\\CmsAPI\\CmsAPI.csproj",
         "projectName": "CmsAPI",
-        "projectPath": "C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CMS\\CMS\\CmsAPI.csproj",
+        "projectPath": "C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CmsAPI\\CmsAPI\\CmsAPI.csproj",
         "packagesPath": "C:\\Users\\DURGA-1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CMS\\CMS\\obj\\",
+        "outputPath": "C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CmsAPI\\CmsAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\DURGA-1\\AppData\\Roaming\\NuGet\\NuGet.Config",

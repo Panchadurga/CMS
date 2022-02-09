@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="CMS">
-      <HintPath>..\..\CMS\CMS\bin\Debug\net5.0\CMS.dll</HintPath>
+    <Reference Include="CmsAPI">
+      <HintPath>..\..\CmsAPI\CmsAPI\bin\Debug\net5.0\CmsAPI.dll</HintPath>
     </Reference>
   </ItemGroup>
 

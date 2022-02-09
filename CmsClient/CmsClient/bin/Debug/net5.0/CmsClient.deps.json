@@ -41,7 +41,7 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "5.0.2",
           "Microsoft.VisualStudio.Web.CodeGeneration.Utils": "5.0.2",
           "Newtonsoft.Json": "13.0.1",
-          "CMS": "1.0.0.0",
+          "CmsAPI": "1.0.0.0",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "5.0.0.0",
@@ -1825,15 +1825,15 @@
           "System.Xml.XmlDocument": "4.3.0"
         }
       },
-      "CMS/1.0.0.0": {
+      "CmsAPI/1.0.0.0": {
         "runtime": {
-          "CMS.dll": {
+          "CmsAPI.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         },
         "compile": {
-          "CMS.dll": {}
+          "CmsAPI.dll": {}
         }
       },
       "Swashbuckle.AspNetCore.SwaggerGen/6.2.1.0": {
@@ -4453,7 +4453,7 @@
       "path": "system.xml.xmlserializer/4.3.0",
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
-    "CMS/1.0.0.0": {
+    "CmsAPI/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

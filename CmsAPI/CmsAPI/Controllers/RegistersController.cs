@@ -12,11 +12,11 @@ namespace CMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserSetupsController : ControllerBase
+    public class RegistersController : ControllerBase
     {
         private readonly CMSContext _context;
 
-        public UserSetupsController(CMSContext context)
+        public RegistersController(CMSContext context)
         {
             _context = context;
         }
@@ -24,17 +24,17 @@ namespace CMS.Controllers
         // GET: api/UserSetups
         [HttpGet]
         //Get all the list of users
-        public async Task<ActionResult<IEnumerable<UserSetup>>> GetUserSetup()
+        public async Task<ActionResult<IEnumerable<Registration>>> GetUserSetup()
         {
-            return await _context.UserSetup.ToListAsync();
+            return await _context.Registration.ToListAsync();
         }
         //Get user record by Email ID
         
         [Route("[action]/{Email}")]
         [HttpGet]
-        public UserSetup GetUserSetupbyEmail(string Email)
+        public Registration GetUserSetupbyEmail(string Email)
         {
-            UserSetup userSetup = (from i in _context.UserSetup.ToList()
+            Registration userSetup = (from i in _context.Registration.ToList()
                              where i.Email == Email
                              select i).FirstOrDefault();
 
@@ -50,9 +50,9 @@ namespace CMS.Controllers
         [Route("[action]/{Username}")]
         [HttpGet]
         //Get a userrecord by username
-        public async Task<ActionResult<UserSetup>> GetUserSetup(string Username)
+        public async Task<ActionResult<Registration>> GetUserSetup(string Username)
         {
-            var userSetup = await _context.UserSetup.FindAsync(Username);
+            var userSetup = await _context.Registration.FindAsync(Username);
 
             if (userSetup == null)
             {
@@ -66,9 +66,9 @@ namespace CMS.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{Username}")]
         //Edit the user details by id
-        public async Task<IActionResult> PutUserSetup(string Username, UserSetup userSetup)
+        public async Task<IActionResult> PutUserSetup(string Username, Registration userSetup)
         {
-            foreach(var i in _context.UserSetup.ToList())
+            foreach(var i in _context.Registration.ToList())
             {
                 if(i.Username == Username)
                 {
@@ -94,9 +94,9 @@ namespace CMS.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         //Add a user
-        public async Task<ActionResult<UserSetup>> PostUserSetup(UserSetup userSetup)
+        public async Task<ActionResult<Registration>> PostUserSetup(Registration userSetup)
         {
-            _context.UserSetup.Add(userSetup);
+            _context.Registration.Add(userSetup);
             try
             {
                 await _context.SaveChangesAsync();
@@ -121,13 +121,13 @@ namespace CMS.Controllers
         //Delete a user by id
         public async Task<IActionResult> DeleteUserSetup(string Username)
         {
-            var userSetup = await _context.UserSetup.FindAsync(Username);
+            var userSetup = await _context.Registration.FindAsync(Username);
             if (userSetup == null)
             {
                 return NotFound();
             }
 
-            _context.UserSetup.Remove(userSetup);
+            _context.Registration.Remove(userSetup);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -135,7 +135,7 @@ namespace CMS.Controllers
 
         private bool UserSetupExists(string Username)
         {
-            return _context.UserSetup.Any(e => e.Password == Username);
+            return _context.Registration.Any(e => e.Password == Username);
         }
     }
 }

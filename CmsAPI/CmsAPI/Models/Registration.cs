@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CMS.Models
 {
-    public class UserSetup
+    public class Registration
     {
         //Data validation
         [Key]
@@ -23,8 +23,13 @@ namespace CMS.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [RegularExpression("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,20}$", ErrorMessage = "Password must be atleast one upper/lowercase,special character and number")]
+        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "At least one uppercase, one lowercase, one digit, one special character and minimum eight in length")]
         public string Password { get; set; }
+
+        [Required]
+        public string SecurityQuestion { get; set; }
+        [Required]
+        public string Answer { get; set; }
         public bool Status { get; set; }
         public string SecurityCode { get; set; }
         public DateTime? CreationDate { get; set; }

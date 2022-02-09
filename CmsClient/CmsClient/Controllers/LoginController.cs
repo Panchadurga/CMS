@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CMS.Data;
-using CMS.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using CMS.Data;
 
 namespace CmsClient.Controllers
 {
@@ -34,14 +33,19 @@ namespace CmsClient.Controllers
         [HttpPost]
         public IActionResult Login(CmsClient.Models.Login l)
         {
-            CMS.Models.UserSetup obj = (from i in _db.UserSetup
-                                        where i.Username == l.Username && i.Password == l.Password && i.Status == true
+            CMS.Models.Registration obj = (from i in _db.Registration
+                                        where i.Username == l.Username && i.Status == true
                                         select i).FirstOrDefault();
             
          
             if (obj != null )
             {
 
+                if(obj.Password != l.Password)
+                {
+                    ModelState.AddModelError(nameof(l.ErrorMessage), "Incorrect Password");
+                    return View();
+                }
                 string username = obj.Username;
                 HttpContext.Session.SetString("username", username);
                 //ViewBag.user = username;
@@ -53,7 +57,7 @@ namespace CmsClient.Controllers
             }
             else
             {
-                ModelState.AddModelError(nameof(l.ErrorMessage),"Incorrect Username Or Password!!!");
+                ModelState.AddModelError(nameof(l.ErrorMessage),"Incorrect Username");
                 //ViewBag.errormsg = "You have entered wrong username/password";
                 return View();
 

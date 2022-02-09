@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uZN8Lpry6Vc64kPjaaBtw+0ZF9Wgq34OKwV2PgolXPUUpbDQACDmHAJyQwssJ5IPsPvIb2ChMbR1bFcQcFNyew==",
+  "dgSpecHash": "qysxE7D4/0lNZPUX/94TXSXumZeeWEwba6RsxfK50ncJVwMUx0rHAo4VSI+UiFkp83wqKbLeA2S09MQfCWv7LQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CMS\\CMS\\CmsAPI.csproj",
+  "projectFilePath": "C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CmsAPI\\CmsAPI\\CmsAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DURGA-1\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",
     "C:\\Users\\DURGA-1\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
