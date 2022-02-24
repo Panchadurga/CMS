@@ -3,7 +3,7 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 <div>
-    <label asp-for="AppointmentTime" class="control-label"></label>
+    <label asp-for="AppointmentTime" class="control-label"></label><span class="text-danger">*</span>
     <select asp-for="AppointmentTime" class="form-control">
         @foreach (var item in ViewBag.res)
         {

@@ -5,31 +5,48 @@
 }
 @Html.Partial("_Navbarmenu")
 @*<h1>Create</h1>*@
-
+<header>
+    <style>
+        .doctorform:before {
+            background-image: url("https://images.pexels.com/photos/48604/pexels-photo-48604.jpeg");
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            content: "";
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: -1;
+            display: block;
+        }
+    </style>
+</header>
 <h4 class="text-center text-primary">Add Doctor</h4>
 <hr />
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" class="doctorform">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*<div class="form-group">
                     <label asp-for="DoctorId" class="control-label"></label>
                     <input asp-for="DoctorId" class="form-control" />
                     <span asp-validation-for="DoctorId" class="text-danger"></span>
                 </div>*@
+        <div class="form-group">
+            <label asp-for="Firstname" class="control-label"></label><span class="text-danger">*</span>
+            <input asp-for="Firstname" class="form-control" />
+            <span asp-validation-for="Firstname" class="text-danger"></span>
+        </div>
             <div class="form-group">
-                <label asp-for="Firstname" class="control-label"></label>
-                <input asp-for="Firstname" class="form-control" />
-                <span asp-validation-for="Firstname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Lastname" class="control-label"></label>
+                <label asp-for="Lastname" class="control-label"></label><span class="text-danger">*</span>
                 <input asp-for="Lastname" class="form-control" />
                 <span asp-validation-for="Lastname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Sex" class="control-label"></label>
+                <label asp-for="Sex" class="control-label"></label><span class="text-danger">*</span>
                 <select asp-for="Sex" class="form-control">
                     <option>M</option>
                     <option>F</option>
@@ -38,7 +55,7 @@
                 <span asp-validation-for="Sex" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Specialization" class="control-label"></label>
+                <label asp-for="Specialization" class="control-label"></label><span class="text-danger">*</span>
                 <select asp-for="Specialization" class="form-control">
                     <option>General</option>
                     <option>Internal Medicine</option>
@@ -49,7 +66,7 @@
                 <span asp-validation-for="Specialization" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
+                <label asp-for="StartTime" class="control-label"></label><span class="text-danger">*</span>
                 <select asp-for="StartTime" class="form-control">
                     <option>6:00</option>
                     <option>7:00</option>
@@ -69,10 +86,11 @@
                     <option>21:00</option>
                     <option>22:00</option>
                 </select>
+                @*<input asp-for="StartTime" class="form-control" />*@
                 <span asp-validation-for="StartTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
+                <label asp-for="EndTime" class="control-label"></label><span class="text-danger">*</span>
                 <select asp-for="EndTime" class="form-control">
                     <option>6:00</option>
                     <option>7:00</option>
@@ -92,6 +110,7 @@
                     <option>21:00</option>
                     <option>22:00</option>
                 </select>
+                @*<input asp-for="EndTime" class="form-control" />*@
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -103,8 +122,8 @@
 </div>
 <br />
 @*<div>
-        <a asp-action="GetAllDoctors">Back to List</a>
-    </div>*@
+        <a asp-action="GetAllDoctors">Back</a>
+</div>*@
 
 @section Scripts {
     <script> 

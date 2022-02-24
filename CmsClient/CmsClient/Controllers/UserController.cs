@@ -64,27 +64,46 @@ namespace CmsClient.Controllers
             ViewBag.resultCaptcha = ViewBag.captcha1 + ViewBag.captcha2;
             return View("RegisterForm");
         }
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)] // Avoid to store session cache.
         [HttpPost]
         public async Task<IActionResult> Create(RegisterForm reg)
         {
+            //validating username
+            string name = reg.Username;
+            while (CheckUserAvailablity(name).Result == false)
+            {
+                Random rnd = new Random();
+                string autosuggestion = reg.Username + rnd.Next(1, 1000);
+                if (CheckUserAvailablity(autosuggestion).Result == true)
+                {
 
+                    ViewBag.captcha1 = rnd.Next(0, 20);// returns random integers >= 10 and < 19
+                    ViewBag.captcha2 = rnd.Next(10, 20);
+                    ViewBag.resultCaptcha = ViewBag.captcha1 + ViewBag.captcha2;
+
+                    ViewBag.autosuggestion = "Username is already taken. Try: " + reg.Username + rnd.Next(1, 1000);
+                    return View("RegisterForm");
+                }
+
+            }
 
             MainHelper main = new MainHelper(_configuration);
-            
+
             UserRegister Uobj = new UserRegister();
             //Assign the value for this fields
-            Uobj.Username = reg.Username;
             Uobj.Firstname = reg.Firstname;
             Uobj.Lastname = reg.Lastname;
+            Uobj.Username = reg.Username;
             Uobj.Email = reg.Email;
-            Uobj.Password = reg.Password;
+            Uobj.Password = Helpers.PasswordHasher.Encrypt(reg.Password);
+            Uobj.ConfirmPassword = Uobj.Password;
             Uobj.SecurityQuestion = reg.SecurityQuestion;
             Uobj.Answer = reg.Answer;
+            Uobj.MobileNo = "9887051246";
             Uobj.Status = false;
             Uobj.CreationDate = DateTime.Now;
             Uobj.SecurityCode = Helpers.RandomHelper.RandomString(6);
 
-           
 
             using (var httpClient = new HttpClient())
             {
@@ -100,15 +119,14 @@ namespace CmsClient.Controllers
                             Uobj = JsonConvert.DeserializeObject<UserRegister>(apiResponse);
                             try
                             {
-                                
+
                                 //sending email to user
                                 string body = "<!DOCTYPE html>" +
                                                 "<html> " +
-                                                    "<body style=\"background -color:#ff7f26;text-align:center;\"> " +
-                                                    "<h3 style=\"color:#051a80;\">Welcome </h3> " + Uobj.Username +
-                                                    "<h3>Thanks for your registration!</h3>" +
-                                                    "<h3>Security Code: </h3>" + Uobj.SecurityCode +
-                                                    "<h4>Please click on the following link to verify your account.</h4> " +
+                                                    "<body> " +
+                                                    "<h4>Welcome </h4>" + Uobj.Username +
+                                                    "<h4>Thanks for your registration!\nSecurity Code: </h4>" + Uobj.SecurityCode +
+                                                    "<h4>Please click on the following link to verify your account.</h4>" +
                                                     "<a href='https://localhost:44338/User/Activate'>Verify here</a>" +
                                                     "</body> " +
                                                 "</html>";
@@ -116,15 +134,15 @@ namespace CmsClient.Controllers
                                 main.Send(_configuration["Gmail:Username"], Uobj.Email, "Successfully Registered!", body);
 
                                 //Notification message displays on the top of the view page
-                                
+
                                 //we can store any data in session for particular time period i.e browser
                                 HttpContext.Session.SetString("username", Uobj.Username);
                                 HttpContext.Session.SetString("purpose", "login");
                                 //return RedirectToAction("Activate");
                                 //ViewBag.EmailSentMessage = "Email sent successfully!";
                                 _notyf.Success("Verification code sent to your registered email!", 10);
-                                return RedirectToAction("Login","Login");
-                                
+                                return View("RegisterForm");
+
 
                             }
                             catch
@@ -134,21 +152,18 @@ namespace CmsClient.Controllers
                                 ViewBag.captcha1 = rnd.Next(0, 20);// returns random integers >= 10 and < 19
                                 ViewBag.captcha2 = rnd.Next(10, 20);
                                 ViewBag.resultCaptcha = ViewBag.captcha1 + ViewBag.captcha2;
-                                reg.Email = "";
-                                return View("RegisterForm",reg);
+                                ViewBag.EmailError = "Invalid Email Address";
+                                return View("RegisterForm", reg);
                             }
 
                         }
                         else
                         {
-                            _notyf.Warning("Username is already taken", 3);
+                            _notyf.Warning("Something went wrong!", 3);
                             Random rnd = new Random();
                             ViewBag.captcha1 = rnd.Next(0, 20);// returns random integers >= 10 and < 19
                             ViewBag.captcha2 = rnd.Next(10, 20);
                             ViewBag.resultCaptcha = ViewBag.captcha1 + ViewBag.captcha2;
-                            
-                            reg.Username = null;
-                            reg.Captcha = null;
                             return View("RegisterForm", reg);
                         }
 
@@ -164,7 +179,41 @@ namespace CmsClient.Controllers
                     return View("RegisterForm", reg);
                 }
             }
+
         }
+
+        public static async Task<bool> CheckUserAvailablity(string user)
+        {
+            List<UserRegister> UserSetupInfo = new List<UserRegister>();
+
+            using (var client = new HttpClient())
+            {
+
+                client.BaseAddress = new Uri("https://localhost:44305/");
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await client.GetAsync("api/Registers");
+
+                if (Res.IsSuccessStatusCode)
+                {
+                    var UserSetupResponse = Res.Content.ReadAsStringAsync().Result;
+                    UserSetupInfo = JsonConvert.DeserializeObject<List<UserRegister>>(UserSetupResponse);
+
+                }
+            }
+            foreach (var i in UserSetupInfo)
+            {
+                if (i.Username == user)
+                {
+                    return false;//username is not available
+                }
+
+            }
+            return true;
+
+        }
+
+
         [HttpGet]
         public IActionResult Activate()
         {
@@ -193,14 +242,14 @@ namespace CmsClient.Controllers
                 }
             }
             UserRegister obj = null;
-           
+
 
             foreach (var i in UserSetupInfo)
             {
 
                 if (i.SecurityCode == securitycode)
                 {
-                    int seconds = DateTime.Now.Subtract(i.CreationDate).Seconds;
+                    int seconds = DateTime.Now.Subtract((DateTime)i.CreationDate).Seconds;
                     if (seconds < 60)
                     {
                         obj = i;
@@ -240,7 +289,7 @@ namespace CmsClient.Controllers
                             }
                             else
                             {
-                                
+
                                 return View();
                             }
                         }
@@ -339,6 +388,7 @@ namespace CmsClient.Controllers
         {
             return View();
         }
+       
         [HttpPost]
         public async Task<IActionResult> ForgotPassword(string username)
         {
@@ -361,7 +411,7 @@ namespace CmsClient.Controllers
                 }
                 if (UserSetupInfo == null)
                 {
-                    ViewBag.err = "User name not exists";
+                    ViewBag.userNotFound = "User name not exists";
                     return View();
                 }
                 UserSetupInfo.SecurityCode = Helpers.RandomHelper.RandomString(6);
@@ -380,24 +430,26 @@ namespace CmsClient.Controllers
                 {
                     string body = "<!DOCTYPE html>" +
                                                "<html> " +
-                                                   "<body style=\"background -color:#ff7f26;text-align:center;\"> " +
-                                                   "<h2 style=\"color:#051a80;\">Welcome</h2> " + 
-                                                   "<h3>You can reset your password here!!</h3>" +                                                 
-                                                   "<a href='https://localhost:44338/User/ResetPassword'>Reset Link</a>" +
+                                                   "<body> " +
+                                                    "<h4>Welcome </h4>" + UserSetupInfo.Username +
+                                                    "<h4>You are requested to reset your password</h4> " +
+                                                    "<h4>Use Security Code: </h4>" + UserSetupInfo.SecurityCode +
+                                                    "<h4>Please click on the following link to verify your account.</h4>" +
+                                                    "<a href='https://localhost:44338/User/Activate'>Verify here</a>" +
                                                    "</body> " +
                                                "</html>";
                     //string body = "Hi " + UserSetupInfo.Username + "\nSecurity Code: " + UserSetupInfo.SecurityCode;
                     MainHelper main = new MainHelper(_configuration);
-                    main.Send(_configuration["Gmail:username"], UserSetupInfo.Email, "Reset Password", body);
+                    main.Send(_configuration["Gmail:username"], UserSetupInfo.Email, "Verify Account", body);
                     HttpContext.Session.SetString("purpose", "reset");
                     HttpContext.Session.SetString("username", UserSetupInfo.Username);
                     //ViewBag.EmailSentMessage = "Reset link has been sent to your registered mail";
-                    _notyf.Success("Please check your email to reset your password", 10);
+                    _notyf.Success("Please check your email to verify your account", 10);
 
                 }
                 catch
                 {
-                    _notyf.Error("Invalid Email Address!", 60);
+                    _notyf.Error("Invalid Email Address!", 10);
                     return View();
                 }
 
@@ -437,15 +489,16 @@ namespace CmsClient.Controllers
 
                 }
 
-                //update your password
-                UserSetupInfo.Password = obj.Currentpassword;
+                //update your new password with old password
+                UserSetupInfo.Password = Helpers.PasswordHasher.Encrypt(obj.Currentpassword);
+                UserSetupInfo.ConfirmPassword = UserSetupInfo.Password;
 
 
                 using (var httpClient = new HttpClient())
                 {
 
-                    StringContent content1 = new StringContent(JsonConvert.SerializeObject(UserSetupInfo), Encoding.UTF8, "application/json");
-                    using (var response = await httpClient.PutAsync("https://localhost:44305/api/Registers/" + username, content1))
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(UserSetupInfo), Encoding.UTF8, "application/json");
+                    using (var response = await httpClient.PutAsync("https://localhost:44305/api/Registers/" + username, content))
                     {
 
                     }
@@ -462,7 +515,7 @@ namespace CmsClient.Controllers
                 }
                 catch
                 {
-                    _notyf.Error("Invalid Email Address!", 60);
+                    _notyf.Error("Something went wrong!", 10);
                     return View();
                 }
 
@@ -497,14 +550,29 @@ namespace CmsClient.Controllers
                     UserList = JsonConvert.DeserializeObject<List<UserRegister>>(UserSetupResponse);
 
                 }
-            }
 
-            var user = (from i in UserList
-                        where i.SecurityQuestion == reg.SecurityQuestion && i.Answer == reg.Answer
-                        select i.Username).FirstOrDefault();
-            if(user == null)
+            }
+            ////validating Email address- available ore not 
+            //foreach (var i in UserList)
+            //{
+            //    if (i.Email != reg.Email)
+            //    {
+            //        ViewBag.invalidEmail = "Invalid Email address";
+            //        return View();
+            //    }
+            //}
+
+
+            //Getting username from database using security Q&A and Email
+            var user = (from db in UserList
+                        where db.SecurityQuestion == reg.SecurityQuestion && db.Answer == reg.Answer && db.Email == reg.Email
+                        select db.Username).FirstOrDefault();
+
+
+            //If user is not found in database returns an error message in view
+            if (user == null)
             {
-                ViewBag.errormsg = "User not found";
+                ViewBag.userNotFound = "User not found";
                 return View();
             }
 
@@ -523,8 +591,8 @@ namespace CmsClient.Controllers
                     u = JsonConvert.DeserializeObject<UserRegister>(UserSetupResponse);
 
                 }
-                u.SecurityCode = Helpers.RandomHelper.RandomString(6);
-                u.CreationDate = DateTime.Now;
+                //u.SecurityCode = Helpers.RandomHelper.RandomString(6);
+                //u.CreationDate = DateTime.Now;
                 using (var httpClient = new HttpClient())
                 {
 
@@ -537,43 +605,39 @@ namespace CmsClient.Controllers
 
                 try
                 {
-                    
-                        MainHelper main = new MainHelper(_configuration);
-                        //string body = "Hi " + u.Username + "\nSecurity Code: " + u.SecurityCode;
-                        string body = "<!DOCTYPE html>" +
-                                               "<html> " +
-                                                   "<body style=\"background -color:#ff7f26;text-align:center;\"> " +
-                                                   "<h2 style=\"color:#051a80;\">Verification successfully done!</h2> " +
-                                                   "<h3>Now, You can reset your password here!!</h3>" +
-                                                   "<a href='https://localhost:44338/User/ResetPassword'>Reset Link</a>" +
-                                                   "</body> " +
-                                               "</html>";
-                        
-                        main.Send(_configuration["Gmail:username"], u.Email, "Reset Password", body);
-                        HttpContext.Session.SetString("purpose", "reset");
-                        HttpContext.Session.SetString("username", u.Username);
-                        //ViewBag.EmailSentMessage = "Reset link has been sent to your registered mail";
-                        _notyf.Success("Please check your email to reset your password",10);
-                        
+
+                    MainHelper main = new MainHelper(_configuration);
+                    //string body = "Hi " + u.Username + "\nSecurity Code: " + u.SecurityCode;
+                    string body = "<!DOCTYPE html>" +
+                                           "<html> " +
+                                               "<body> " + "<h2>Verification done!</h2> " +
+                                               "<h3>Now, You can reset your password here!!</h3>" +
+                                               "<a href='https://localhost:44338/User/ResetPassword'>Reset Link</a>" +
+                                               "</body> " +
+                                           "</html>";
+
+                    main.Send(_configuration["Gmail:username"], u.Email, "Reset Password", body);
+                    HttpContext.Session.SetString("purpose", "reset");
+                    HttpContext.Session.SetString("username", u.Username);
+                    //ViewBag.EmailSentMessage = "Reset link has been sent to your registered mail";
+                    _notyf.Success("Please check your email to reset your password", 10);
+                   
+
 
                 }
                 catch
                 {
-                    _notyf.Error("Invalid Email Address!", 60);
+                    _notyf.Error("Something went wrong!", 60);
                     return View();
                 }
 
-                return View();
-                //return View("Activate");
+
             }
-
-                
-            
+            return View();
         }
-
-
+         
     }
-
+    
 
     //Edit the user details;
     //[HttpGet]

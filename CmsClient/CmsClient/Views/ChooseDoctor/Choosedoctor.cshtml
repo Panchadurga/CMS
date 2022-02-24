@@ -1,14 +1,33 @@
 ﻿@model CmsClient.Models.ChooseDoctors
 @Html.Partial("_Navbarmenu")
+
+<header>
+    <style>
+        .Specializationform:before {
+            background-image: url("https://images.pexels.com/photos/48604/pexels-photo-48604.jpeg");
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            content: "";
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: -1;
+            display: block;
+        }
+    </style>
+</header>
 <h4 class="text-center text-primary">Choose Specialization</h4>
 <hr />
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
-        <form asp-action="Choosedoctor">
+        <form asp-action="Choosedoctor" class="Specializationform">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="SelectSpeciality" class="control-label"></label>
+                <label asp-for="SelectSpeciality" class="control-label"></label><span class="text-danger">*</span>
                 <select id="selspl" asp-for="SelectSpeciality" class="form-control">
                     <option>General</option>
                     <option>Internal Medicine</option>

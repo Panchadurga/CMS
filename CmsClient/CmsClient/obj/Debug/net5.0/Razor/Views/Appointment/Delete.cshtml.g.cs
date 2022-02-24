@@ -27,7 +27,7 @@ using CmsClient.Models;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"919bb6e9328d5ff5dad2eedd7b29657d3bd6527c", @"/Views/Appointment/Delete.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f7902c7627e4ad52732bd52f421b2141ad6fb677", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d8316db21b371183f6c96cb86d336b9b84f848b9", @"/Views/_ViewImports.cshtml")]
     public class Views_Appointment_Delete : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<CmsClient.Models.Schedule>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "Delete", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);

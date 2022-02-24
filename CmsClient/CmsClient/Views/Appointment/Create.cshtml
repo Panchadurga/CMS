@@ -4,7 +4,24 @@
     var doclist = ViewBag.doctor;
     var pid = ViewBag.pid; }
 @Html.Partial("_Navbarmenu")
-
+<header>
+    <style>
+        .appointmentform:before {
+            background-image: url("https://images.pexels.com/photos/48604/pexels-photo-48604.jpeg");
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            content: "";
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: -1;
+            display: block;
+        }
+    </style>
+</header>
 <h4 class="text-center text-primary">Book Appointment</h4>
 <hr />
 @*To Display the available list of Visiting Hours*@
@@ -33,25 +50,25 @@
 <div class="row">
     <div class="col-md-6"></div>
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" class="appointmentform">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="PatientId" class="control-label"></label>
+                <label asp-for="PatientId" class="control-label"></label><span class="text-danger">*</span>
                 <select asp-for="PatientId" class="form-control" asp-items="@pid"></select>
                 <span asp-validation-for="PatientId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Specialization" class="control-label"></label>
+                <label asp-for="Specialization" class="control-label"></label><span class="text-danger">*</span>
                 <input readonly asp-for="Specialization" class="form-control" value="@(ViewBag.specialization)" />
                 <span asp-validation-for="Specialization" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DoctorName" class="control-label"></label>
+                <label asp-for="DoctorName" class="control-label"></label><span class="text-danger">*</span>
                 <select id="doctorname" asp-for="DoctorName" class="form-control" asp-items="@doclist"></select>
                 <span asp-validation-for="DoctorName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VisitDate" class="control-label"></label>
+                <label asp-for="VisitDate" class="control-label"></label><span class="text-danger">*</span>
                 <input id="visitdate" asp-for="VisitDate" class="form-control" />
                 <span asp-validation-for="VisitDate" class="text-danger"></span>
             </div>

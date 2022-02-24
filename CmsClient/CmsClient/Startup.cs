@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
 using System;
+using CmsClient.Helpers;
+
 
 namespace CmsClient
 {
@@ -37,7 +39,10 @@ namespace CmsClient
             services.AddDistributedMemoryCache();
             services.AddSession();
             services.AddControllersWithViews();
-        
+
+            
+
+
 
         }
 

@@ -2,7 +2,24 @@
 
 @{ ViewData["Title"] = "Edit"; }
 @Html.Partial("_Navbarmenu")
-@*<h1>Edit</h1>*@
+<header>
+    <style>
+        .patientform:before {
+            background-image: url("https://images.pexels.com/photos/48604/pexels-photo-48604.jpeg");
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            content: "";
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: -1;
+            display: block;
+        }
+    </style>
+</header>
 
 <h4 class="text-center text-primary">Edit Patient</h4>
 <hr />
@@ -10,25 +27,25 @@
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" class="patientform">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="PatientId" class="control-label"></label>
+                <label asp-for="PatientId" class="control-label"></label><span class="text-danger">*</span>
                 <input asp-for="PatientId" class="form-control" readonly/>
                 <span asp-validation-for="PatientId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Firstname" class="control-label"></label>
+                <label asp-for="Firstname" class="control-label"></label><span class="text-danger">*</span>
                 <input asp-for="Firstname" class="form-control" />
                 <span asp-validation-for="Firstname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Lastname" class="control-label"></label>
+                <label asp-for="Lastname" class="control-label"></label><span class="text-danger">*</span>
                 <input asp-for="Lastname" class="form-control" />
                 <span asp-validation-for="Lastname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Sex" class="control-label"></label>
+                <label asp-for="Sex" class="control-label"></label><span class="text-danger">*</span>
                 <select asp-for="Sex" class="form-control">
                     <option>M</option>
                     <option>F</option>
@@ -37,15 +54,15 @@
                 <span asp-validation-for="Sex" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DOB" class="control-label"></label>
+                <label asp-for="DOB" class="control-label"></label><span class="text-danger">*</span>
                 <input asp-for="DOB" class="form-control" />
                 <span asp-validation-for="DOB" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Age" class="control-label"></label>
+            @*<div class="form-group">
+                <label asp-for="Age" class="control-label"></label><span class="text-danger">*</span>
                 <input asp-for="Age" class="form-control" />
                 <span asp-validation-for="Age" class="text-danger"></span>
-            </div>
+            </div>*@
 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

@@ -75,10 +75,12 @@ namespace CMS.Controllers
                     
                     i.Firstname = userSetup.Firstname;
                     i.Lastname = userSetup.Lastname;
+                    i.Email = userSetup.Email;
                     i.Password = userSetup.Password;
+                    i.ConfirmPassword = userSetup.ConfirmPassword;
+                    i.MobileNo = userSetup.MobileNo;
                     i.SecurityCode = userSetup.SecurityCode;
                     i.Status = userSetup.Status;
-                    i.Email = userSetup.Email;
                     i.CreationDate = userSetup.CreationDate;
                     _context.SaveChanges();
                     return Ok(200);

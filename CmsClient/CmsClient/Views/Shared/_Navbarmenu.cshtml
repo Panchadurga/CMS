@@ -1,162 +1,173 @@
-﻿@*Navigation bar for Dashboard Pages*@
+﻿@*@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor*@
+
+@*Navigation bar for Dashboard Pages*@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <header>
     <style>
-       @@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+        @@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 
-.navbar-icon-top .navbar-nav .nav-link > .fa {
-  position: relative;
-  width: 36px;
-  font-size: 24px;
-}
+        .navbar-icon-top .navbar-nav .nav-link > .fa {
+            position: relative;
+            width: 36px;
+            font-size: 24px;
+        }
 
-.navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
-  font-size: 0.75rem;
-  position: absolute;
-  right: 0;
-  font-family: sans-serif;
-}
+            .navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
+                font-size: 0.75rem;
+                position: absolute;
+                right: 0;
+                font-family: sans-serif;
+            }
 
-.navbar-icon-top .navbar-nav .nav-link > .fa {
-  top: 3px;
-  line-height: 12px;
-}
+        .navbar-icon-top .navbar-nav .nav-link > .fa {
+            top: 3px;
+            line-height: 12px;
+        }
 
-.navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
-  top: -10px;
-}
+            .navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
+                top: -10px;
+            }
 
-@@media (min-width: 576px) {
-  .navbar-icon-top.navbar-expand-sm .navbar-nav .nav-link {
-    text-align: center;
-    display: table-cell;
-    height: 70px;
-    vertical-align: middle;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+        @@media (min-width: 576px) {
+            .navbar-icon-top.navbar-expand-sm .navbar-nav .nav-link {
+                text-align: center;
+                display: table-cell;
+                height: 70px;
+                vertical-align: middle;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
 
-  .navbar-icon-top.navbar-expand-sm .navbar-nav .nav-link > .fa {
-    display: block;
-    width: 48px;
-    margin: 2px auto 4px auto;
-    top: 0;
-    line-height: 24px;
-  }
+                .navbar-icon-top.navbar-expand-sm .navbar-nav .nav-link > .fa {
+                    display: block;
+                    width: 48px;
+                    margin: 2px auto 4px auto;
+                    top: 0;
+                    line-height: 24px;
+                }
 
-  .navbar-icon-top.navbar-expand-sm .navbar-nav .nav-link > .fa > .badge {
-    top: -7px;
-  }
-}
-
-@@media (min-width: 768px) {
-  .navbar-icon-top.navbar-expand-md .navbar-nav .nav-link {
-    text-align: center;
-    display: table-cell;
-    height: 70px;
-    vertical-align: middle;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  .navbar-icon-top.navbar-expand-md .navbar-nav .nav-link > .fa {
-    display: block;
-    width: 48px;
-    margin: 2px auto 4px auto;
-    top: 0;
-    line-height: 24px;
-  }
-
-  .navbar-icon-top.navbar-expand-md .navbar-nav .nav-link > .fa > .badge {
-    top: -7px;
-  }
-}
-
-@@media (min-width: 992px) {
-  .navbar-icon-top.navbar-expand-lg .navbar-nav .nav-link {
-    text-align: center;
-    display: table-cell;
-    height: 70px;
-    vertical-align: middle;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  .navbar-icon-top.navbar-expand-lg .navbar-nav .nav-link > .fa {
-    display: block;
-    width: 48px;
-    margin: 2px auto 4px auto;
-    top: 0;
-    line-height: 24px;
-  }
-
-  .navbar-icon-top.navbar-expand-lg .navbar-nav .nav-link > .fa > .badge {
-    top: -7px;
-  }
-}
-
-@@media (min-width: 1200px) {
-  .navbar-icon-top.navbar-expand-xl .navbar-nav .nav-link {
-    text-align: center;
-    display: table-cell;
-    height: 70px;
-    vertical-align: middle;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  .navbar-icon-top.navbar-expand-xl .navbar-nav .nav-link > .fa {
-    display: block;
-    width: 48px;
-    margin: 2px auto 4px auto;
-    top: 0;
-    line-height: 24px;
-  }
-
-  .navbar-icon-top.navbar-expand-xl .navbar-nav .nav-link > .fa > .badge {
-    top: -7px;
-  }
-
-                    .navbar{
-                        margin:0px;
+                    .navbar-icon-top.navbar-expand-sm .navbar-nav .nav-link > .fa > .badge {
+                        top: -7px;
                     }
+        }
+
+        @@media (min-width: 768px) {
+            .navbar-icon-top.navbar-expand-md .navbar-nav .nav-link {
+                text-align: center;
+                display: table-cell;
+                height: 70px;
+                vertical-align: middle;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+
+                .navbar-icon-top.navbar-expand-md .navbar-nav .nav-link > .fa {
+                    display: block;
+                    width: 48px;
+                    margin: 2px auto 4px auto;
+                    top: 0;
+                    line-height: 24px;
+                }
+
+                    .navbar-icon-top.navbar-expand-md .navbar-nav .nav-link > .fa > .badge {
+                        top: -7px;
+                    }
+        }
+
+        @@media (min-width: 992px) {
+            .navbar-icon-top.navbar-expand-lg .navbar-nav .nav-link {
+                text-align: center;
+                display: table-cell;
+                height: 70px;
+                vertical-align: middle;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+
+                .navbar-icon-top.navbar-expand-lg .navbar-nav .nav-link > .fa {
+                    display: block;
+                    width: 48px;
+                    margin: 2px auto 4px auto;
+                    top: 0;
+                    line-height: 24px;
+                }
+
+                    .navbar-icon-top.navbar-expand-lg .navbar-nav .nav-link > .fa > .badge {
+                        top: -7px;
+                    }
+        }
+
+        @@media (min-width: 1200px) {
+            .navbar-icon-top.navbar-expand-xl .navbar-nav .nav-link {
+                text-align: center;
+                display: table-cell;
+                height: 70px;
+                vertical-align: middle;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+
+                .navbar-icon-top.navbar-expand-xl .navbar-nav .nav-link > .fa {
+                    display: block;
+                    width: 48px;
+                    margin: 2px auto 4px auto;
+                    top: 0;
+                    line-height: 24px;
+                }
+
+                    .navbar-icon-top.navbar-expand-xl .navbar-nav .nav-link > .fa > .badge {
+                        top: -7px;
+                    }
+
+            .navbar {
+                margin: 0px;
+            }
         }
     </style>
 </header>
 <!------ Include the above in your HEAD tag ---------->
+@*@{
+    ViewBag.Data = @HttpContextAccessor.HttpContext.Session.GetString("username");
+}
+@if (ViewBag.Data != null)
+{*@
+    <nav class="navbar navbar-icon-top navbar-expand-lg navbar-light bg-transparent">
+        <img src="~/images/Stone-Clinic-Logo.jpg" style="width:40px;height:40px;border-radius:50%;" alt="logo">
+        <div>
+            <h3 class="text-primary">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b>The Stone Clinic App</b>
+            </h3>
+        </div>
 
-<nav class="navbar navbar-icon-top navbar-expand-lg navbar-light bg-light">
-    <img src="~/images/Stone-Clinic-Logo.jpg" style="width:40px;height:40px;border-radius:50%;" alt="logo">
-    <div>
-        <h3 class="text-primary">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-            <b>The Stone Clinic App</b>
-        </h3>
-    </div>
-    
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav"style="margin-left:85%">
-            <li class="nav-item">
-                <a class="nav-link" href='@Url.Action("Index", "Dashboard")'>
-                    <i style="color:black;" class="fa fa-home"></i>
-                    Home
-                </a>
-            </li>
-        </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href='@Url.Action("Login", "Login")'>
-                    <i style="color:black;" class="fa fa-sign-out"></i>
-                    Log out
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav" style="margin-left:85%">
+                <li class="nav-item">
+                    <a class="nav-link" href='@Url.Action("Index", "Dashboard")'>
+                        <i style="color:black;" class="fa fa-home"></i>
+                        Home
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href='@Url.Action("Login", "Login")'>
+                        <i style="color:black;" class="fa fa-sign-out"></i>
+                        Log out
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+@*}
+else { 
 
+}*@
+            

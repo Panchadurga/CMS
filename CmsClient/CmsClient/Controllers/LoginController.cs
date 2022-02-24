@@ -7,6 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using CMS.Data;
+using Microsoft.Extensions.Configuration;
+using System.Net;
+
 
 namespace CmsClient.Controllers
 {
@@ -15,11 +18,13 @@ namespace CmsClient.Controllers
     {
         //To access the user's data from sql database with the help of context class
         private readonly CMSContext _db;
-        private readonly INotyfService _notyf;    
+        private readonly INotyfService _notyf;
+       
         public LoginController(INotyfService notyf, CMSContext db)
         {
             _db = db;
             _notyf = notyf;
+            
         }
 
         //Get - login form
@@ -28,11 +33,15 @@ namespace CmsClient.Controllers
         {
             return View();
         }
+
         
         // Post(Hits the login button)
         [HttpPost]
-        public IActionResult Login(CmsClient.Models.Login l)
+        public IActionResult Login(Login l)
         {
+           
+            
+
             CMS.Models.Registration obj = (from i in _db.Registration
                                         where i.Username == l.Username && i.Status == true
                                         select i).FirstOrDefault();
@@ -41,7 +50,7 @@ namespace CmsClient.Controllers
             if (obj != null )
             {
 
-                if(obj.Password != l.Password)
+                if(Helpers.PasswordHasher.Decrypt(obj.Password) != l.Password)
                 {
                     ModelState.AddModelError(nameof(l.ErrorMessage), "Incorrect Password");
                     return View();
@@ -62,6 +71,8 @@ namespace CmsClient.Controllers
                 return View();
 
             }
+            
+
         }
 
     }

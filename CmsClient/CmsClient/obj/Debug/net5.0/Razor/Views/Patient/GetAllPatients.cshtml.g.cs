@@ -27,7 +27,7 @@ using CmsClient.Models;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f8a3d024562c528a883c5216e46aad998dd76451", @"/Views/Patient/GetAllPatients.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f7902c7627e4ad52732bd52f421b2141ad6fb677", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d8316db21b371183f6c96cb86d336b9b84f848b9", @"/Views/_ViewImports.cshtml")]
     public class Views_Patient_GetAllPatients : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<IEnumerable<CmsClient.Models.Patient>>
     {
         #pragma warning disable 1998

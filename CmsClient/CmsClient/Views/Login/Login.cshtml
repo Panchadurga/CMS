@@ -51,7 +51,6 @@
                 /*filter: blur(2px);*/
             }
 
-
             .form-box input {
                 margin: 10px 0px;
                 border: none;
@@ -61,7 +60,6 @@
                 font-size: 18px;
                 font-family: 'Montserrat', sans-serif;
             }
-
 
             .form-box span {
                 font-size: 14px;
@@ -79,9 +77,11 @@
                 padding: 10px;
                 margin: 20px 10px;
             }
+
         .text-color {
             color: goldenrod;
         }
+
         .text-content {
             font-size: 18px;
         }
@@ -104,16 +104,17 @@
 
         <div class="form-box">
             <h2 style="text-align: center;">Sign in</h2>
+           
             <span asp-validation-for="ErrorMessage" style="text-align:center; font-size:20px;font-weight:600;color:goldenrod;margin-left:15px;"></span>
             <div>
                 <label asp-for="Username" class="control-label"></label><span class="text-danger">*</span>
-                <input id="username" asp-for="Username" type="text" class="form-control form-control-lg"
+                <input id="username" asp-for="Username" type="text" class="form-control"
                        placeholder="Username" required />
                 <span asp-validation-for="Username" class="text-color"></span>
             </div>
             <div>
                 <label asp-for="Password" class="control-label"></label><span class="text-danger">*</span>
-                <input id="password" asp-for="Password" type="password" class="form-control form-control-lg"
+                <input id="password" asp-for="Password" type="password" class="form-control"
                        placeholder="Password" required />
                 <span asp-validation-for="Password" class="text-color"></span>
             </div>
@@ -122,7 +123,7 @@
                     Login
                 </button>
                 @*<input type="button" value="Reset" onclick="clearResult()"/>*@
-                <button type="button" class="btn btn-success"  onclick="resetbtn()">
+                <button type="button" class="btn btn-success" onclick="resetbtn()">
                     Reset
                 </button>
             </div>
@@ -144,9 +145,9 @@
     <script>
         function resetbtn() {
             document.getElementById("loginform").reset();
-            
+
         };
-        
+
         $(document).ready(function () {
             const pw = document.querySelector('#password');
             const form = document.querySelector('#loginform');
@@ -154,7 +155,6 @@
                 if (event.keyCode === 13) {
                     form.submit();
                 }
-
             });
             document.addEventListener('keydown', function (event) {
                 if (event.keyCode === 13 && event.target.nodeName === 'INPUT') {
@@ -162,16 +162,10 @@
                     var form = event.target.form;
                     var index = Array.prototype.indexOf.call(form, event.target);
                     form.elements[index + 1].focus();
-
-
                 }
             });
-
         });
-
     </script>
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
-

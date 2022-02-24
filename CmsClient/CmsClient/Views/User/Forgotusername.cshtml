@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <style>
         .form-gap {
-            padding-top: 70px;
+            padding-top: 30px;
         }
 
         * {
@@ -45,6 +45,7 @@
         }
     </style>
 </header>
+
 <body>
     <div class="form-gap"></div>
     <div class="container">
@@ -52,14 +53,24 @@
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel">
                     <div class="panel-body">
+                        <div style="float:right;">
+                            <a href='@Url.Action("Login","Login")' class="btn btn-light">
+                                <i class="fa fa-close"></i>
+                            </a>
+                        </div>
                         <div class="text-center">
-                            <h3 style="color:dimgrey"><i class="fa fa-user fa-4x"></i></h3>
+                            <h3 style="color:dimgrey"><i style="margin-left:30px;" class="fa fa-user fa-4x"></i></h3>
                             <h2 class="text-center">Forgot Username?</h2>
-                            <h4 class="text-center">Please answer your security question, and we’ll send you instructions to reset your password.</h4>
-                            <h5 class="text-danger">@ViewBag.errormsg </h5>
+                            @*<h4 class="text-center">Please answer your security question, and we’ll send you instructions to reset your password.</h4>*@
+                            <h4 class="text-danger">@ViewBag.userNotFound </h4>
                             <div class="panel-body">
-
                                 <form id="forgotusername-form" role="form" autocomplete="off" class="form" method="post">
+                                    <div style="color:black" class="form-group text-left">
+                                        <label asp-for="Email" class="control-label"></label><span class="text-danger">*</span>
+                                        <input id="email" asp-for="Email" class="form-control" placeholder="Email" type="email" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                        @*<h5 class="text-danger">@ViewBag.invalidEmail</h5>*@
+                                    </div>
                                     <div style="color:black" class="form-group text-left">
                                         <label asp-for="SecurityQuestion" class="control-label"></label><span class="text-danger">*</span>
                                         <select asp-for="SecurityQuestion" class="form-control">
@@ -69,26 +80,18 @@
                                             <option>What was the name of your first stuffed toy?</option>
                                         </select>
                                         <span asp-validation-for="SecurityQuestion" class="text-danger"></span>
+
                                     </div>
                                     <div style="color:black" class="form-group text-left">
                                         <label asp-for="Answer" class="control-label"></label><span class="text-danger">*</span>
                                         <input id="answer" asp-for="Answer" class="form-control" placeholder="Type answer" />
                                         <span asp-validation-for="Answer" class="text-danger"></span>
-                                        <h5 class="text-danger">@ViewBag.err </h5>
+
                                     </div>
                                     <div class="form-group">
                                         <input name="recover-submit" class="btn btn-lg btn-color btn-block" value="Send Reset Link" type="submit">
                                     </div>
                                 </form>
-                                <div style="float:right; margin:0;">
-                                    <a asp-action="Login" asp-controller="Login" class="btn btn-secondary">Back</a>
-                                </div>
-                                @if (ViewBag.EmailSentMessage != null)
-                                {
-                                    <div class="bg-success">
-                                        <label>@ViewBag.EmailSentMessage</label>
-                                    </div>
-                                }
                             </div>
                         </div>
                     </div>
