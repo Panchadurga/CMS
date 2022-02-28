@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace CmsClient.Controllers
 {
@@ -63,29 +64,14 @@ namespace CmsClient.Controllers
             ViewBag.captcha2 = rnd.Next(10, 20);
             ViewBag.resultCaptcha = ViewBag.captcha1 + ViewBag.captcha2;
             return View("RegisterForm");
+            
+            
         }
         [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)] // Avoid to store session cache.
         [HttpPost]
         public async Task<IActionResult> Create(RegisterForm reg)
         {
-            //validating username
-            string name = reg.Username;
-            while (CheckUserAvailablity(name).Result == false)
-            {
-                Random rnd = new Random();
-                string autosuggestion = reg.Username + rnd.Next(1, 1000);
-                if (CheckUserAvailablity(autosuggestion).Result == true)
-                {
-
-                    ViewBag.captcha1 = rnd.Next(0, 20);// returns random integers >= 10 and < 19
-                    ViewBag.captcha2 = rnd.Next(10, 20);
-                    ViewBag.resultCaptcha = ViewBag.captcha1 + ViewBag.captcha2;
-
-                    ViewBag.autosuggestion = "Username is already taken. Try: " + reg.Username + rnd.Next(1, 1000);
-                    return View("RegisterForm");
-                }
-
-            }
+            
 
             MainHelper main = new MainHelper(_configuration);
 
@@ -123,35 +109,35 @@ namespace CmsClient.Controllers
                                 //sending email to user
                                 string body = "<!DOCTYPE html>" +
                                                 "<html> " +
-                                                    "<body> " +
-                                                    "<h4>Welcome </h4>" + Uobj.Username +
-                                                    "<h4>Thanks for your registration!\nSecurity Code: </h4>" + Uobj.SecurityCode +
-                                                    "<h4>Please click on the following link to verify your account.</h4>" +
-                                                    "<a href='https://localhost:44338/User/Activate'>Verify here</a>" +
-                                                    "</body> " +
-                                                "</html>";
-                                //string body = "Welcome " + Uobj.Username + "\nThanks for your registration!\nPlease verify your account using code\nSecurity Code: " + Uobj.SecurityCode;
-                                main.Send(_configuration["Gmail:Username"], Uobj.Email, "Successfully Registered!", body);
+                                                    "<body>"+ 
+                                                    "Hello " + Uobj.Username +
+                                                    "</br>" +
+                                                    "Your verification code is " + Uobj.SecurityCode +
+                                                    "</br>" +
+                                                    "<h5>Enter this code to activate your account</h5>" +
+                                                    "<h5>Please click on the following link.<a href='https://localhost:44338/User/Activate'>Verify here</a></h5>" +
+                                                    "<h2 style=color:skyblue>The Whiteblue Team</h2>"+
+                                                    "</body>" +
+                                                "</html>";           
+                                main.Send(_configuration["Gmail:Username"], Uobj.Email, "Account verification", body);
 
-                                //Notification message displays on the top of the view page
+                                
 
                                 //we can store any data in session for particular time period i.e browser
                                 HttpContext.Session.SetString("username", Uobj.Username);
                                 HttpContext.Session.SetString("purpose", "login");
                                 //return RedirectToAction("Activate");
                                 //ViewBag.EmailSentMessage = "Email sent successfully!";
-                                _notyf.Success("Verification code sent to your registered email!", 10);
+
+                                //Notification message displays on the top of the view page
+                                _notyf.Success("Verification code sent to your registered email!", 20);
                                 return View("RegisterForm");
 
 
                             }
                             catch
                             {
-                                _notyf.Error("Invalid Email Address!", 60);
-                                Random rnd = new Random();
-                                ViewBag.captcha1 = rnd.Next(0, 20);// returns random integers >= 10 and < 19
-                                ViewBag.captcha2 = rnd.Next(10, 20);
-                                ViewBag.resultCaptcha = ViewBag.captcha1 + ViewBag.captcha2;
+                                _notyf.Error("Invalid Email Address!", 10);
                                 ViewBag.EmailError = "Invalid Email Address";
                                 return View("RegisterForm", reg);
                             }
@@ -159,29 +145,22 @@ namespace CmsClient.Controllers
                         }
                         else
                         {
-                            _notyf.Warning("Something went wrong!", 3);
-                            Random rnd = new Random();
-                            ViewBag.captcha1 = rnd.Next(0, 20);// returns random integers >= 10 and < 19
-                            ViewBag.captcha2 = rnd.Next(10, 20);
-                            ViewBag.resultCaptcha = ViewBag.captcha1 + ViewBag.captcha2;
-                            return View("RegisterForm", reg);
+                            _notyf.Warning("Something went wrong!", 5);
+                             return View("RegisterForm", reg);
                         }
 
                     }
                 }
                 else
-                {
-                    Random rnd = new Random();
-                    ViewBag.captcha1 = rnd.Next(0, 20);// returns random integers >= 10 and < 19
-                    ViewBag.captcha2 = rnd.Next(10, 20);
-                    ViewBag.resultCaptcha = ViewBag.captcha1 + ViewBag.captcha2;
-                    ViewBag.captchaError = "Invalid Captcha";
+                { 
                     return View("RegisterForm", reg);
                 }
             }
 
         }
 
+
+        //Check username availability using database
         public static async Task<bool> CheckUserAvailablity(string user)
         {
             List<UserRegister> UserSetupInfo = new List<UserRegister>();
@@ -213,6 +192,89 @@ namespace CmsClient.Controllers
 
         }
 
+
+        //Username Validation - Auto suggesstion
+        public IActionResult CheckUsernameAvailability(string username)
+        {
+            if(username == null)
+            {
+                return PartialView("_UsernameAutoSuggestion");
+            }
+            
+            while (CheckUserAvailablity(username).Result == false)// username already taken so not available
+            {
+                Random rnd = new Random();
+                string autosuggestion = username + rnd.Next(1, 1000);
+                if (CheckUserAvailablity(autosuggestion).Result == true) //username not taken so available 
+                {
+
+                    ViewBag.autosuggestion = "Username is already taken. Try: " + username + rnd.Next(1, 1000);
+                    return PartialView("_UsernameAutoSuggestion");
+
+                }
+            
+            }
+            return PartialView("_UsernameAutoSuggestion");
+
+        }
+
+        //Email validation
+        public async Task<IActionResult> CheckEmailAvailability(string email)
+        {
+            if(email == null)
+            {
+                return PartialView("_EmailValidation");
+            }
+            List<UserRegister> UserSetupInfo = new List<UserRegister>();
+
+            using (var client = new HttpClient())
+            {
+
+                client.BaseAddress = new Uri("https://localhost:44305/");
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await client.GetAsync("api/Registers");
+
+                if (Res.IsSuccessStatusCode)
+                {
+                    var UserSetupResponse = Res.Content.ReadAsStringAsync().Result;
+                    UserSetupInfo = JsonConvert.DeserializeObject<List<UserRegister>>(UserSetupResponse);
+
+                }
+            }
+            bool flag = false;
+            foreach (var i in UserSetupInfo)
+            {
+                if(i.Email == email)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag)
+            {
+                ViewBag.email = "Email already exists";
+            }
+
+            else
+            {
+                var x = Regex.Match(email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+                if (x.Success == false)
+                {
+                    ViewBag.email = "Please enter a valid email address[of length greater than 6 characters including @ , .]";
+                }
+                //string pattern = @"[A-Za-z0-9]+@[].;
+                //if (email )
+                //if (!email.Contains("@") && !email.Contains(".") && email.Length < 6)
+                //{
+                //    ViewBag.email = "Please enter a valid email address[of length greater than 6 characters including @ , .]";
+
+                    //}
+
+            }
+            return PartialView("_EmailValidation");
+            
+        }
 
         [HttpGet]
         public IActionResult Activate()
@@ -274,15 +336,15 @@ namespace CmsClient.Controllers
                             {
                                 try
                                 {
-                                    string body = "Dear " + obj.Username + "\nYour account is activated!\nNow you can use your user credentials to log in to your account";
+                                    string body = "Hello " + obj.Username + "\nYour account is activated!\nNow you can use your user credentials to log in to your account";
                                     MainHelper main = new MainHelper(_configuration);
-                                    main.Send(_configuration["Gmail:username"], obj.Email, "Verification Process Done!", body);
-                                    _notyf.Success("Your account is activated!", 3);
+                                    main.Send(_configuration["Gmail:username"], obj.Email, "Account activated!", body);
+                                    _notyf.Success("Your account is activated!", 5);
                                     return RedirectToAction("Login", "Login");
                                 }
                                 catch
                                 {
-                                    _notyf.Error("Invalid Email Address!", 60);
+                                    _notyf.Error("Invalid Email Address!", 10);
                                     return View();
                                 }
 
@@ -310,15 +372,15 @@ namespace CmsClient.Controllers
                                 {
                                     string body = "You have requested to reset your password\nNow you can update your password";
                                     MainHelper main = new MainHelper(_configuration);
-                                    main.Send(_configuration["Gmail:username"], obj.Email, "Reset-Password Approved!", body);
-                                    _notyf.Success("Successfully verified", 3);
+                                    main.Send(_configuration["Gmail:username"], obj.Email, "Password Reset", body);
+                                    //_notyf.Success("Successfully verified", 5);
                                     HttpContext.Session.SetString("username", obj.Username);
                                     return RedirectToAction("ResetPassword", "User");
 
                                 }
                                 catch
                                 {
-                                    _notyf.Error("Invalid Email Address!", 60);
+                                    _notyf.Error("Invalid Email Address!", 10);
                                     return View();
                                 }
 
@@ -367,15 +429,15 @@ namespace CmsClient.Controllers
             }
             try
             {
-                string body = "Security code: " + u.SecurityCode;
+                string body = "OTP: " + u.SecurityCode;
                 MainHelper main = new MainHelper(_configuration);
-                main.Send(_configuration["Gmail:username"], u.Email, "New Security Code", body);
-                _notyf.Success("Code has been sent to your registered mail", 10);
+                main.Send(_configuration["Gmail:username"], u.Email, "Resend OTP", body);
+                _notyf.Success("Your new OTP will be sent to your registered email", 20);
                 return RedirectToAction("Activate");
             }
             catch
             {
-                _notyf.Error("Invalid Email Address!", 60);
+                _notyf.Error("Invalid Email Address!", 10);
                 return View();
             }
 
@@ -383,6 +445,7 @@ namespace CmsClient.Controllers
 
 
         }
+
         [HttpGet]
         public IActionResult ForgotPassword()
         {
@@ -411,7 +474,8 @@ namespace CmsClient.Controllers
                 }
                 if (UserSetupInfo == null)
                 {
-                    ViewBag.userNotFound = "User name not exists";
+                    //ViewBag.userNotFound = "User name not exists";
+                    _notyf.Error("User Not Found", 20);
                     return View();
                 }
                 UserSetupInfo.SecurityCode = Helpers.RandomHelper.RandomString(6);
@@ -431,20 +495,20 @@ namespace CmsClient.Controllers
                     string body = "<!DOCTYPE html>" +
                                                "<html> " +
                                                    "<body> " +
-                                                    "<h4>Welcome </h4>" + UserSetupInfo.Username +
-                                                    "<h4>You are requested to reset your password</h4> " +
-                                                    "<h4>Use Security Code: </h4>" + UserSetupInfo.SecurityCode +
-                                                    "<h4>Please click on the following link to verify your account.</h4>" +
-                                                    "<a href='https://localhost:44338/User/Activate'>Verify here</a>" +
+                                                    "Hi " + UserSetupInfo.Username + "</br>" + 
+                                                    "You have requested to reset the password of your account" + "</br>" +
+                                                    "Your OTP is " + UserSetupInfo.SecurityCode +
+                                                    "<h4>Please find the OTP to change your password</h4>" + 
+                                                    "<a href='https://localhost:44338/User/Activate'>Reset your password</a>" +
                                                    "</body> " +
                                                "</html>";
-                    //string body = "Hi " + UserSetupInfo.Username + "\nSecurity Code: " + UserSetupInfo.SecurityCode;
+                    
                     MainHelper main = new MainHelper(_configuration);
-                    main.Send(_configuration["Gmail:username"], UserSetupInfo.Email, "Verify Account", body);
+                    main.Send(_configuration["Gmail:username"], UserSetupInfo.Email, "Resetting your account password", body);
                     HttpContext.Session.SetString("purpose", "reset");
                     HttpContext.Session.SetString("username", UserSetupInfo.Username);
-                    //ViewBag.EmailSentMessage = "Reset link has been sent to your registered mail";
-                    _notyf.Success("Please check your email to verify your account", 10);
+                    
+                    _notyf.Success("OTP link has been sent to your registered email", 20);
 
                 }
                 catch
@@ -490,7 +554,7 @@ namespace CmsClient.Controllers
                 }
 
                 //update your new password with old password
-                UserSetupInfo.Password = Helpers.PasswordHasher.Encrypt(obj.Currentpassword);
+                UserSetupInfo.Password = Helpers.PasswordHasher.Encrypt(obj.Newpassword);
                 UserSetupInfo.ConfirmPassword = UserSetupInfo.Password;
 
 
@@ -507,15 +571,14 @@ namespace CmsClient.Controllers
                 {
                     string body = "Your password has been changed successfully!\nUse your new password to login";
                     MainHelper main = new MainHelper(_configuration);
-                    main.Send(_configuration["Gmail:username"], UserSetupInfo.Email, "Password Changed!", body);
-                    _notyf.Success("Password Changed", 3);
-                    ViewBag.UpdateMessage = "Your password has been changed successfully";
+                    main.Send(_configuration["Gmail:username"], UserSetupInfo.Email, "Password Updated!", body);
+                    _notyf.Success("Password Updated", 5);
                     return RedirectToAction("Login", "Login");
 
                 }
                 catch
                 {
-                    _notyf.Error("Something went wrong!", 10);
+                    _notyf.Error("Something went wrong!", 20);
                     return View();
                 }
 
@@ -552,16 +615,23 @@ namespace CmsClient.Controllers
                 }
 
             }
-            ////validating Email address- available ore not 
-            //foreach (var i in UserList)
-            //{
-            //    if (i.Email != reg.Email)
-            //    {
-            //        ViewBag.invalidEmail = "Invalid Email address";
-            //        return View();
-            //    }
-            //}
+            bool flag = false;
+            //validating Email address- available ore not 
+            foreach (var i in UserList)
+            {
+                if (i.Email == reg.Email)
+                {
+                    flag = true;
+                }
+                
+            }
+            if (!flag)
+            {
 
+                //ViewBag.invalidEmail = "Invalid Email address";
+                _notyf.Error("Email Not Found", 20);
+
+            }
 
             //Getting username from database using security Q&A and Email
             var user = (from db in UserList
@@ -610,24 +680,23 @@ namespace CmsClient.Controllers
                     //string body = "Hi " + u.Username + "\nSecurity Code: " + u.SecurityCode;
                     string body = "<!DOCTYPE html>" +
                                            "<html> " +
-                                               "<body> " + "<h2>Verification done!</h2> " +
-                                               "<h3>Now, You can reset your password here!!</h3>" +
-                                               "<a href='https://localhost:44338/User/ResetPassword'>Reset Link</a>" +
+                                               "<body>" + "Hello " + u.Username + 
+                                               "<h3>If you've lost your password or wish to reset it , use the link below</h3>" +
+                                               "<a href='https://localhost:44338/User/ResetPassword'>Reset your password</a>" +
                                                "</body> " +
                                            "</html>";
 
-                    main.Send(_configuration["Gmail:username"], u.Email, "Reset Password", body);
+                    main.Send(_configuration["Gmail:username"], u.Email, "Password reset", body);
                     HttpContext.Session.SetString("purpose", "reset");
                     HttpContext.Session.SetString("username", u.Username);
-                    //ViewBag.EmailSentMessage = "Reset link has been sent to your registered mail";
-                    _notyf.Success("Please check your email to reset your password", 10);
+                    _notyf.Success("Reset link has been sent to your registered mail", 20);
                    
 
 
                 }
                 catch
                 {
-                    _notyf.Error("Something went wrong!", 60);
+                    _notyf.Error("Something went wrong!", 20);
                     return View();
                 }
 
@@ -635,8 +704,11 @@ namespace CmsClient.Controllers
             }
             return View();
         }
+
+        
          
     }
+    
     
 
     //Edit the user details;

@@ -817,3 +817,5 @@ C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Cli
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\Razor\Views\User\_EmailValidation.cshtml.g.cs
+C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\Razor\Views\User\_UsernameAutoSuggestion.cshtml.g.cs
