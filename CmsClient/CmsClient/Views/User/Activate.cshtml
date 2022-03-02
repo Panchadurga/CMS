@@ -21,6 +21,11 @@
 <body>
     <div style="margin-top:10%">
         <div class="card mx-auto border-info bg-light " style="width:20rem;">
+            <div>
+                <a style="float:right;" href='@Url.Action("Login","Login")' class="btn btn-light">
+                    <i class="fa fa-close text-secondary"></i>
+                </a>
+            </div>
             <img style="width:60px; height:60px" src="https://media-exp1.licdn.com/dms/image/C560BAQEiT9Jlibun6A/company-logo_200_200/0/1623866540247?e=2159024400&v=beta&t=MQLvPyJh2DeKWoruvGd8-EJbh1yyUKCgIWezMuuxphc" class="card-img-top rounded-circle mx-auto mt-2 mb-2" alt="logo">
             <div class="card-body">
                 <div>
@@ -28,7 +33,7 @@
                     <p class="card-text mb-3">OTP has been sent to your registered email</p>
                 </div>
                 <form method="post">
-                    <div>                      
+                    <div>
                         <input type="text" name="securityCode" class="form-control mb-4" placeholder="Enter OTP" maxlength="6">
                         <span class="text-danger">@ViewBag.invalidCode</span>
                     </div>

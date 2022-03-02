@@ -105,20 +105,21 @@ namespace CmsClient.Controllers
                             Uobj = JsonConvert.DeserializeObject<UserRegister>(apiResponse);
                             try
                             {
-
+                                
+                                string body = "<!DOCTYPE html><html><body><p> Hi " + Uobj.Username + ",</p><p>Your verification code is " + Uobj.SecurityCode  + "</p><p>Enter this code to activate your account</p><p>Please click on the following link.<a href='https://localhost:44338/User/Activate'><p/> Click here </a><p/></body></html>";
                                 //sending email to user
-                                string body = "<!DOCTYPE html>" +
-                                                "<html> " +
-                                                    "<body>"+ 
-                                                    "Hello " + Uobj.Username +
-                                                    "</br>" +
-                                                    "Your verification code is " + Uobj.SecurityCode +
-                                                    "</br>" +
-                                                    "<h5>Enter this code to activate your account</h5>" +
-                                                    "<h5>Please click on the following link.<a href='https://localhost:44338/User/Activate'>Verify here</a></h5>" +
-                                                    "<h2 style=color:skyblue>The Whiteblue Team</h2>"+
-                                                    "</body>" +
-                                                "</html>";           
+                                //string body = "<!DOCTYPE html>" +
+                                //                "<html> " +
+                                //                    "<body>"+ 
+                                //                    "Hello " + Uobj.Username +
+                                //                    "</br>" +
+                                //                    "Your verification code is " + Uobj.SecurityCode +
+                                //                    "</br>" +
+                                //                    "<h5>Enter this code to activate your account</h5>" +
+                                //                    "<h5>Please click on the following link.<a href='https://localhost:44338/User/Activate'>Verify here</a></h5>" +
+                                //                    "<h2 style=color:skyblue>Team Whiteblue</h2>"+
+                                //                    "</body>" +
+                                //                "</html>";           
                                 main.Send(_configuration["Gmail:Username"], Uobj.Email, "Account verification", body);
 
                                 
@@ -171,13 +172,21 @@ namespace CmsClient.Controllers
                 client.BaseAddress = new Uri("https://localhost:44305/");
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage Res = await client.GetAsync("api/Registers");
-
-                if (Res.IsSuccessStatusCode)
+                try
                 {
-                    var UserSetupResponse = Res.Content.ReadAsStringAsync().Result;
-                    UserSetupInfo = JsonConvert.DeserializeObject<List<UserRegister>>(UserSetupResponse);
+                    HttpResponseMessage Res = await client.GetAsync("api/Registers");
 
+                    if (Res.IsSuccessStatusCode)
+                    {
+                        var UserSetupResponse = Res.Content.ReadAsStringAsync().Result;
+                        UserSetupInfo = JsonConvert.DeserializeObject<List<UserRegister>>(UserSetupResponse);
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    var ex = e;
+                    
                 }
             }
             foreach (var i in UserSetupInfo)
@@ -336,7 +345,8 @@ namespace CmsClient.Controllers
                             {
                                 try
                                 {
-                                    string body = "Hello " + obj.Username + "\nYour account is activated!\nNow you can use your user credentials to log in to your account";
+                                    string body = "<!DOCTYPE html><html><body><p>Hello " + obj.Username + ",</p><p>Your account is activated!</p><p>Now you can use your user credentials to log in to your account</p></body></html>";
+                                    //string body = "Hello " + obj.Username + "\nYour account is activated!\nNow you can use your user credentials to log in to your account";
                                     MainHelper main = new MainHelper(_configuration);
                                     main.Send(_configuration["Gmail:username"], obj.Email, "Account activated!", body);
                                     _notyf.Success("Your account is activated!", 5);
@@ -370,7 +380,8 @@ namespace CmsClient.Controllers
                             {
                                 try
                                 {
-                                    string body = "You have requested to reset your password\nNow you can update your password";
+                                    string body = "<!DOCTYPE html><html><body><p> Hello " + username + ",</p><p>You have requested to reset your password</p><p>Now you can update your password</p></body></html>";
+                                    //string body = "You have requested to reset your password\nNow you can update your password";
                                     MainHelper main = new MainHelper(_configuration);
                                     main.Send(_configuration["Gmail:username"], obj.Email, "Password Reset", body);
                                     //_notyf.Success("Successfully verified", 5);
@@ -429,7 +440,8 @@ namespace CmsClient.Controllers
             }
             try
             {
-                string body = "OTP: " + u.SecurityCode;
+                 
+                string body = "Your OTP is " + u.SecurityCode;
                 MainHelper main = new MainHelper(_configuration);
                 main.Send(_configuration["Gmail:username"], u.Email, "Resend OTP", body);
                 _notyf.Success("Your new OTP will be sent to your registered email", 20);
@@ -491,17 +503,9 @@ namespace CmsClient.Controllers
                     }
                 }
                 try
+                  
                 {
-                    string body = "<!DOCTYPE html>" +
-                                               "<html> " +
-                                                   "<body> " +
-                                                    "Hi " + UserSetupInfo.Username + "</br>" + 
-                                                    "You have requested to reset the password of your account" + "</br>" +
-                                                    "Your OTP is " + UserSetupInfo.SecurityCode +
-                                                    "<h4>Please find the OTP to change your password</h4>" + 
-                                                    "<a href='https://localhost:44338/User/Activate'>Reset your password</a>" +
-                                                   "</body> " +
-                                               "</html>";
+                    string body = "<!DOCTYPE html><html><body><p> Hello " + UserSetupInfo.Username + ",</p><p>You have requested to reset the password of your account</p><p>Your OTP is " + UserSetupInfo.SecurityCode + "</p><p>Please find the OTP to change your password</p><a href='https://localhost:44338/User/Activate'>Reset your password</a></body></html>";
                     
                     MainHelper main = new MainHelper(_configuration);
                     main.Send(_configuration["Gmail:username"], UserSetupInfo.Email, "Resetting your account password", body);
@@ -681,7 +685,7 @@ namespace CmsClient.Controllers
                     string body = "<!DOCTYPE html>" +
                                            "<html> " +
                                                "<body>" + "Hello " + u.Username + 
-                                               "<h3>If you've lost your password or wish to reset it , use the link below</h3>" +
+                                               "<p>If you've lost your password or wish to reset it , use the link below</p>" +
                                                "<a href='https://localhost:44338/User/ResetPassword'>Reset your password</a>" +
                                                "</body> " +
                                            "</html>";
