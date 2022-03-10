@@ -10,7 +10,7 @@ namespace CmsClient.Controllers
     public class DashboardController : Controller
     {
 
-       
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index()
         {
             ViewBag.user = HttpContext.Session.GetString("username");
@@ -52,14 +52,22 @@ namespace CmsClient.Controllers
         //    return RedirectToAction("Delete", "Appointment");
 
         //}
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Logout()
         {
+          
 
+            HttpContext.Session.SetString("username", "");
             HttpContext.Session.Clear();
+            Response.Cookies.Delete("username");
+            HttpContext.Response.Cookies.Delete("username");
 
             return RedirectToAction("Login", "Login");
+            
+           
 
         }
+
             
     }
 }

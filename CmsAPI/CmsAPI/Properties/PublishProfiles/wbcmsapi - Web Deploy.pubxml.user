@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA6PZUoyfHyUer1Gpmf6C3oQAAAAACAAAAAAAQZgAAAAEAACAAAADOZoe5ay+yb7KGQjsKWoDp8h6ELeeOy1OUl41ZnJo17AAAAAAOgAAAAAIAACAAAAB5eou9VZinFQMbG20Y1Euql0MnkiIdUQr1thd++zNgloAAAAAYQTkz6zN0+taa7w/iqVAW2QMDL+YPSMAOAULUIoWEzWw4JPGh8BKL5dNfILUOv2o4kZ7fNY+NJW0IDAaiZme5losRAatP2XmcDXvYx9Ofxvj2Xtl7v3kc6/POj/pgeNwFCySBHi6AWJRqEHktUxF9P1l2rkhcCRWzJOUESWF5YEAAAAAZ7081WpLH+Q+sWZ8VFuRtbvOBMDQdyj98zKIV7ZMs4Gx1mVhHjKkoaH/xxWFy9u44KX05dHNyfrejHo3wq1A/</EncryptedPassword>
+    <History>True|2022-03-03T13:56:11.3965350Z;True|2022-03-03T19:12:04.5050739+05:30;True|2022-03-03T17:09:16.0692037+05:30;True|2022-03-03T17:03:39.7071841+05:30;True|2022-03-03T16:37:26.7246669+05:30;True|2022-03-03T12:48:10.6507852+05:30;</History>
+  </PropertyGroup>
+  <ItemGroup>
+    <EFMigrations Include="CMS.Data.CMSContext">
+      <Value>Data Source=tcp:cmswbserver.database.windows.net,1433%3bInitial Catalog=cmsdb%3bUser Id=CmsDB%40cmswbserver%3bPassword=!Morning1</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

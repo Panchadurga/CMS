@@ -6,14 +6,24 @@ a.navbar-brand {
   text-align: center;
   word-break: break-all;
 }
+
+/*.h-custom {
+    height: calc(100% - 73px);
+}
+
+@media (max-width: 450px) {
+    .h-custom {
+        height: 100%;
+    }
+}*/
 /*logo image*/
-.logo-image {
-    width: 46px;
-    height: 46px;
+/*.logo-image {
+    width: 66px;
+    height: 66px;
     border-radius: 50%;
     overflow: hidden;
     margin-top: -6px;
-}
+}*/
 /*AvailableTime*/
 .availableTime {
     text-align:right;
@@ -33,6 +43,7 @@ a {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
 
 /* Sticky footer styles
 -------------------------------------------------- */

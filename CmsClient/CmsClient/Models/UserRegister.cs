@@ -20,8 +20,8 @@ namespace CmsClient.Models
 
 
         [Key]
-        [Required]
-        [RegularExpression(@"^[a-zA-Z0-9 ]+$", ErrorMessage = "Special Characters not allowed")]
+        //[Required]
+        //[RegularExpression(@"^[a-zA-Z0-9 ]+$", ErrorMessage = "Special Characters not allowed")]
         [DisplayName("User Name")]
         public string Username { get; set; }
 

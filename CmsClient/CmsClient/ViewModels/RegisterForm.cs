@@ -9,25 +9,27 @@ namespace CmsClient.ViewModels
 {
     public class RegisterForm
     {
-        [Required(ErrorMessage = "Firstname is required")]
+        [Required(ErrorMessage = "Please enter your first name")]
+        [RegularExpression(@"^[a-zA-Z ]+$", ErrorMessage = "Numbers and special characters are not allowed")]
         [DisplayName("First Name")]
         public string Firstname { get; set; }
 
 
-        [Required(ErrorMessage = "Lastname is required")]
+        [Required(ErrorMessage = "Please enter your last name")]
+        [RegularExpression(@"^[a-zA-Z ]+$", ErrorMessage = "Numbers and special characters are not allowed")]
         [DisplayName("Last Name")]
         public string Lastname { get; set; }
 
 
         [Key]
-        [Required]
-        [RegularExpression(@"^[a-zA-Z0-9 ]+$", ErrorMessage = "Special Characters not allowed")]
+        //[Required(ErrorMessage = "Please enter your user name")]
+        //[RegularExpression(@"^[a-zA-Z0-9 ]+$", ErrorMessage = "Special characters are not allowed")]
         [DisplayName("User Name")]
         public string Username { get; set; }
 
 
 
-        [Required]
+        [Required(ErrorMessage ="Please enter a valid email address")]
         
         //[DataType(DataType.EmailAddress)]
         //[RegularExpression("[a-z0-9]+@gmail.com", ErrorMessage = "you must provide a gmail account")]
@@ -65,7 +67,7 @@ namespace CmsClient.ViewModels
         public string Answer { get; set; }
 
         public string Captcha { get; set; }
-        [Required(ErrorMessage ="Please enter captcha")]
+        [Required(ErrorMessage = "Please enter captcha")]
         public string resultCaptcha { get; set; }
 
     }

@@ -176,3 +176,153 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220129101839_modify-usersetup')
+BEGIN
+    ALTER TABLE [UserSetup] ADD [CreationDate] nvarchar(max) NULL;
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220129101839_modify-usersetup')
+BEGIN
+    ALTER TABLE [UserSetup] ADD [Email] nvarchar(max) NOT NULL DEFAULT N'';
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220129101839_modify-usersetup')
+BEGIN
+    ALTER TABLE [UserSetup] ADD [SecurityCode] nvarchar(max) NULL;
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220129101839_modify-usersetup')
+BEGIN
+    ALTER TABLE [UserSetup] ADD [Status] bit NOT NULL DEFAULT CAST(0 AS bit);
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220129101839_modify-usersetup')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20220129101839_modify-usersetup', N'5.0.10');
+END;
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220130081030_new')
+BEGIN
+    DECLARE @var2 sysname;
+    SELECT @var2 = [d].[name]
+    FROM [sys].[default_constraints] [d]
+    INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[UserSetup]') AND [c].[name] = N'CreationDate');
+    IF @var2 IS NOT NULL EXEC(N'ALTER TABLE [UserSetup] DROP CONSTRAINT [' + @var2 + '];');
+    ALTER TABLE [UserSetup] ALTER COLUMN [CreationDate] datetime2 NOT NULL;
+    ALTER TABLE [UserSetup] ADD DEFAULT '0001-01-01T00:00:00.0000000' FOR [CreationDate];
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220130081030_new')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20220130081030_new', N'5.0.10');
+END;
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220130081346_datetime')
+BEGIN
+    DECLARE @var3 sysname;
+    SELECT @var3 = [d].[name]
+    FROM [sys].[default_constraints] [d]
+    INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[UserSetup]') AND [c].[name] = N'CreationDate');
+    IF @var3 IS NOT NULL EXEC(N'ALTER TABLE [UserSetup] DROP CONSTRAINT [' + @var3 + '];');
+    ALTER TABLE [UserSetup] ALTER COLUMN [CreationDate] datetime2 NULL;
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220130081346_datetime')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20220130081346_datetime', N'5.0.10');
+END;
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220205132217_reg')
+BEGIN
+    DROP TABLE [UserSetup];
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220205132217_reg')
+BEGIN
+    CREATE TABLE [Registration] (
+        [Username] nvarchar(450) NOT NULL,
+        [Firstname] nvarchar(max) NOT NULL,
+        [Lastname] nvarchar(max) NOT NULL,
+        [Email] nvarchar(max) NOT NULL,
+        [Password] nvarchar(max) NOT NULL,
+        [SecurityQuestion] nvarchar(max) NOT NULL,
+        [Answer] nvarchar(max) NOT NULL,
+        [Status] bit NOT NULL,
+        [SecurityCode] nvarchar(max) NULL,
+        [CreationDate] datetime2 NULL,
+        CONSTRAINT [PK_Registration] PRIMARY KEY ([Username])
+    );
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220205132217_reg')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20220205132217_reg', N'5.0.10');
+END;
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209061710_modifiedregclass')
+BEGIN
+    ALTER TABLE [Registration] ADD [ConfirmPassword] nvarchar(max) NOT NULL DEFAULT N'';
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209061710_modifiedregclass')
+BEGIN
+    ALTER TABLE [Registration] ADD [MobileNo] nvarchar(13) NOT NULL DEFAULT N'';
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209061710_modifiedregclass')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20220209061710_modifiedregclass', N'5.0.10');
+END;
+GO
+
+COMMIT;
+GO
+

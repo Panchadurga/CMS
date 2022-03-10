@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="wbcmsapi" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CmsAPI\\CmsAPI\\obj\\Release\\net5\.0\\PubTmp\\Out\\$" />
+  </parameter>
+  <parameter name="CMS.Data.CMSContext" description="" value="Data Source=tcp:cmswbserver.database.windows.net,1433;Initial Catalog=cmsdb;User Id=CmsDB@cmswbserver;Password=!Morning1" tags="dbfullsql">
+    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\Users\\DURGA-1\\source\\repos\\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\\CmsAPI\\CmsAPI\\obj\\Release\\net5\.0\\PubTmp\\EFSQLScripts\\CMS\.Data\.CMSContext\.sql$" />
+  </parameter>
+</parameters>

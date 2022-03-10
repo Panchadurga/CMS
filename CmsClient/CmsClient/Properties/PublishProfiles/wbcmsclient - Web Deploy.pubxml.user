@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA6PZUoyfHyUer1Gpmf6C3oQAAAAACAAAAAAAQZgAAAAEAACAAAADtKOPf8RctzFaEdkHwG580eET07kI9pWytgjNFZa8x3wAAAAAOgAAAAAIAACAAAAAQHhTWyoLdelIDnYmvr8vwHQHgYKMU51x+hLDhZYAl2IAAAABh32LsZKs3439uCpO3VemVfJmhr9A3DlhJGT1X3Fx6YyJyYi08FDWn+itQ+ZHiyv3qwanep/pQCjde0hD8Zoi/qgkJH5Cvkq0yft0esgBXh5PyMlq4QXgWgq729JRiK8v0sTD786rO5aN23rGcBQAQII6Hj9tmizUt9q+qyrpqkUAAAADbQsvrj8j/y3jPZJ0G6c775VWXH6vfw20/qjMw7OEkJCW3DnYRjvaXE3bAPyOSOzcDMIcTFDMDomz8aMbAz9tW</EncryptedPassword>
+    <History>True|2022-03-09T12:23:49.1218325Z;True|2022-03-09T15:05:23.8286250+05:30;True|2022-03-09T15:00:53.9567399+05:30;True|2022-03-09T14:01:07.3504573+05:30;True|2022-03-09T13:47:20.8079668+05:30;True|2022-03-08T23:24:12.2630443+05:30;True|2022-03-08T20:36:27.0700111+05:30;True|2022-03-03T19:29:58.7244625+05:30;True|2022-03-03T18:58:12.8680670+05:30;True|2022-03-03T18:37:44.9579396+05:30;True|2022-03-03T18:03:44.6192482+05:30;True|2022-03-03T17:52:20.1216088+05:30;True|2022-03-03T17:43:19.8586485+05:30;True|2022-03-03T16:46:09.2682671+05:30;True|2022-03-03T15:53:21.8171558+05:30;True|2022-03-03T15:48:19.4913860+05:30;True|2022-03-03T15:32:06.2728246+05:30;True|2022-03-03T15:09:11.3279577+05:30;True|2022-03-03T14:57:42.2661333+05:30;True|2022-03-03T14:55:27.0974075+05:30;True|2022-03-03T14:50:14.8491792+05:30;True|2022-03-03T14:40:47.8949862+05:30;True|2022-03-03T14:35:00.8467094+05:30;True|2022-03-03T14:15:54.4879683+05:30;True|2022-03-03T14:12:11.2714002+05:30;True|2022-03-03T14:00:19.1615727+05:30;True|2022-03-03T13:25:20.0809571+05:30;True|2022-03-03T13:14:06.1782106+05:30;True|2022-03-03T13:07:06.3551446+05:30;</History>
+  </PropertyGroup>
+  <ItemGroup>
+    <EFMigrations Include="CMS.Data.CMSContext">
+      <Value>Data Source=tcp:cmswbserver.database.windows.net,1433%3bInitial Catalog=cmsdb%3bUser Id=CmsDB%40cmswbserver%3bPassword=!Morning1</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

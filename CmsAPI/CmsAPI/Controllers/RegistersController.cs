@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CMS.Data;
 using CMS.Models;
+using CmsAPI.Helper;
+using CmsAPI.Models;
 
 namespace CMS.Controllers
 {
@@ -15,6 +17,7 @@ namespace CMS.Controllers
     public class RegistersController : ControllerBase
     {
         private readonly CMSContext _context;
+
 
         public RegistersController(CMSContext context)
         {
@@ -138,6 +141,27 @@ namespace CMS.Controllers
         private bool UserSetupExists(string Username)
         {
             return _context.Registration.Any(e => e.Password == Username);
+        }
+        [Route("[action]")]
+        [HttpPost]
+        public string SendMail(Mail m)
+        {
+
+            string from = "manifortestpurpose@gmail.com";
+            string to = m.email;
+            string subject = m.subject;
+            DateTime time = DateTime.Now.AddMinutes(5);
+            
+            MainHelper e = new MainHelper();
+            try
+            {
+                var a = e.Send(from, to, subject, m.content);
+                return a;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
     }
 }

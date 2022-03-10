@@ -51,8 +51,8 @@
                 <label @*class="mb-2"*@>Password</label>
                 <span class="text-danger">*</span>
                 <input asp-for="Password" type="password" class="form-control mb-2" id="password" placeholder="Password">
-                <span class="show-password" onclick="Passwordtoggle()">
-                    <i class="fa fa-eye" onclick="myFunction(this)"></i>
+                <span class="show-password">
+                    <i class="fa fa-eye-slash" onclick="Passwordtoggle(this)"></i>
                 </span>
                 <span asp-validation-for="Password" class="text-danger"></span>
 
@@ -77,8 +77,29 @@
 
 
 @section Scripts {
-    <script src="~/js/show-hide-password-toggle.js"></script>
+    
     <script>
+
+        //Toggle password visibility
+        let state = true;
+        let Password = document.getElementById('password');
+
+        function Passwordtoggle(show) {
+            console.log("show", show);
+            if (state) {
+                Password.setAttribute("type", "password");
+                state = false;
+                show.classList.remove('fa-eye-slash');
+                show.classList.toggle('fa-eye-slash');
+                show.classList.remove('fa-eye');
+            }
+            else {
+                Password.setAttribute("type", "text");
+                state = true;
+                show.classList.toggle('fa-eye');
+                show.classList.remove('fa-eye-slash');
+            }
+        }
 
         // Reset button - clears the input field 
         function resetbtn() {

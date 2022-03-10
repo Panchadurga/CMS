@@ -22,10 +22,16 @@ namespace CmsClient.Controllers
         {
             _notyf = notyf;
         }
-        string Baseurl = "https://localhost:44305/";
+        string Baseurl = "https://wbcmsapi.azurewebsites.net/";
         //Get all the Appointments
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> ViewAppointments()
         {
+            var u = HttpContext.Session.GetString("username");
+            if (u == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             List<Schedule> ScheduleInfo = new List<Schedule>();
 
             using (var client = new HttpClient())
@@ -47,9 +53,15 @@ namespace CmsClient.Controllers
 
         }
         //Booking an Appointment
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         [HttpGet]
         public async Task<IActionResult> Create(string d)
         {
+            var u = HttpContext.Session.GetString("username");
+            if (u == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             List<Doctor> DoctorsList = new List<Doctor>();
 
             using (var client = new HttpClient())
@@ -109,10 +121,15 @@ namespace CmsClient.Controllers
             return View();
 
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> Create(Schedule s)
         {
+            var u = HttpContext.Session.GetString("username");
+            if (u == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             Schedule sobj = new Schedule();
            
             //  HttpClient obj = new HttpClient();
@@ -134,6 +151,11 @@ namespace CmsClient.Controllers
         
         public async Task<IActionResult> Timeslot(string Doctorname, string VisitDate)
         {
+            var u = HttpContext.Session.GetString("username");
+            if (u == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             DateTime visitdate = DateTime.Parse(VisitDate);
             
             int id = 0 ;
@@ -216,13 +238,19 @@ namespace CmsClient.Controllers
         }
         //Cancel an Appointment
         [HttpGet]
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<ActionResult> Delete(int id)
         {
+            var u = HttpContext.Session.GetString("username");
+            if (u == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             TempData["AppointmentId"] = id;
             Schedule s = new Schedule();
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:44305/api/Schedules/" + id))
+                using (var response = await httpClient.GetAsync("https://wbcmsapi.azurewebsites.net/api/Schedules/" + id))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     s = JsonConvert.DeserializeObject<Schedule>(apiResponse);
@@ -231,14 +259,19 @@ namespace CmsClient.Controllers
             return View(s);
 
         }
-
+        
         [HttpPost]
         public async Task<ActionResult> Delete(Schedule s)
         {
+            var u = HttpContext.Session.GetString("username");
+            if (u == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             int appid = Convert.ToInt32(TempData["AppointmentId"]);
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.DeleteAsync("https://localhost:44305/api/Schedules/" + appid))
+                using (var response = await httpClient.DeleteAsync("https://wbcmsapi.azurewebsites.net/api/Schedules/" + appid))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                 }

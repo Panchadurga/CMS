@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using CmsClient.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -19,10 +20,16 @@ namespace CmsClient.Controllers
         {
             _notyf = notyf;
         }
-        string Baseurl = "https://localhost:44305/";
+        string Baseurl = "https://wbcmsapi.azurewebsites.net/";
         //Get all the List of patients
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> GetAllPatients()
         {
+            var u = HttpContext.Session.GetString("username");
+            if (u == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             List<Patient> PatientInfo = new List<Patient>();
 
             using (var client = new HttpClient())
@@ -43,13 +50,24 @@ namespace CmsClient.Controllers
             }
         }
         //Adding a patient
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Create()
         {
+            var u = HttpContext.Session.GetString("username");
+            if (u == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create(Patient p)
         {
+            var u = HttpContext.Session.GetString("username");
+            if (u == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             Patient pobj = new Patient();
             var dob = p.DOB;
             int age = DateTime.Now.Year - dob.Year;
@@ -87,7 +105,7 @@ namespace CmsClient.Controllers
         //        client.DefaultRequestHeaders.Clear();
         //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         //        HttpResponseMessage Res = await client.GetAsync("/api/Patients/GetAgebyDateofBirth/" + dateofbirth);
-                
+
         //        if (Res.IsSuccessStatusCode)
         //        {
         //            var PatientResponse = Res.Content.ReadAsStringAsync().Result;
@@ -99,12 +117,18 @@ namespace CmsClient.Controllers
         //    return PartialView("Age");
         //}
         //Edit the details of the patient
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Edit(int id)
         {
+            var u = HttpContext.Session.GetString("username");
+            if (u == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             Patient p = new Patient();
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:44305/api/Patients/" + id))
+                using (var response = await httpClient.GetAsync("https://wbcmsapi.azurewebsites.net/api/Patients/" + id))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     p = JsonConvert.DeserializeObject<Patient>(apiResponse);
@@ -113,9 +137,16 @@ namespace CmsClient.Controllers
             return View(p);
 
         }
+       
+
         [HttpPost]
         public async Task<IActionResult> Edit(Patient p)
         {
+            var u = HttpContext.Session.GetString("username");
+            if (u == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             var dob = p.DOB;
             int age = DateTime.Now.Year - dob.Year;
             if (DateTime.Now.DayOfYear < dob.DayOfYear)
@@ -128,7 +159,7 @@ namespace CmsClient.Controllers
             {
                 int id = p.PatientId;
                 StringContent content1 = new StringContent(JsonConvert.SerializeObject(p), Encoding.UTF8, "application/json");
-                using (var response = await httpClient.PutAsync("https://localhost:44305/api/Patients/" + id, content1))
+                using (var response = await httpClient.PutAsync("https://wbcmsapi.azurewebsites.net/api/Patients/" + id, content1))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     ViewBag.Result = "Success";
@@ -139,14 +170,20 @@ namespace CmsClient.Controllers
             return RedirectToAction("GetAllPatients");
         }
         //Delete a particular patient
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {
+            var u = HttpContext.Session.GetString("username");
+            if (u == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             TempData["PatientId"] = id;
             Patient p = new Patient();
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:44305/api/Patients/" + id))
+                using (var response = await httpClient.GetAsync("https://wbcmsapi.azurewebsites.net/api/Patients/" + id))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     p = JsonConvert.DeserializeObject<Patient>(apiResponse);
@@ -155,14 +192,19 @@ namespace CmsClient.Controllers
             return View(p);
 
         }
-
+      
         [HttpPost]
         public async Task<ActionResult> Delete(Patient p)
         {
+            var u = HttpContext.Session.GetString("username");
+            if (u == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             int patientid = Convert.ToInt32(TempData["PatientId"]);
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.DeleteAsync("https://localhost:44305/api/Patients/" + patientid))
+                using (var response = await httpClient.DeleteAsync("https://wbcmsapi.azurewebsites.net/api/Patients/" + patientid))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                 }

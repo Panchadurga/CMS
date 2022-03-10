@@ -13,26 +13,30 @@ namespace CmsClient.Helpers
     {
         //To access the data from appsettings.json file
         private IConfiguration configuration;
-        public MainHelper(IConfiguration _configuration)
-        {
-            configuration = _configuration;
-        }
+        //public MainHelper(IConfiguration _configuration)
+        //{
+        //    configuration = _configuration;
+        //}
 
-        public bool Send(string from, string to, string subject, string body)
+        public string Send(string from, string to, string subject, string body)
         {
             try
             {
-                var host = configuration["Gmail:Host"];
-                var port = int.Parse(configuration["Gmail:Port"]);
-                var username = configuration["Gmail:Username"];
-                var password = configuration["Gmail:Password"];
-                var enable = bool.Parse(configuration["Gmail:SMTP:starttls:enable"]);
+               
+                var host = "smtp.gmail.com";
+                var port = 587;
+
+                var username = "manifortestpurpose@gmail.com";
+                var password = "Flowerbell123$";
+                var enable = true;
                 var smtpClient = new SmtpClient
                 {
+                    UseDefaultCredentials = false,
                     Host = host,
-                    Port = port,
+                    Port = port,                                     
                     EnableSsl = enable,
-                    Credentials = new NetworkCredential(username, password)
+                    Credentials = new NetworkCredential(username, password),
+                    DeliveryMethod = SmtpDeliveryMethod.Network
                 };
 
                 var mailMessage = new MailMessage(from, to);
@@ -40,12 +44,12 @@ namespace CmsClient.Helpers
                 mailMessage.Body = body;
                 mailMessage.IsBodyHtml = true;
                 smtpClient.Send(mailMessage);
-                return true;
+                return "success";
             }
             catch (Exception e)
             {
                 string msg = e.Message;
-                return false;
+                return e.Message;
             }
         }
     }

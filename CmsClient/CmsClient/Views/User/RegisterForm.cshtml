@@ -42,12 +42,18 @@
             top: 35px;
             padding-right: 20px;
         }
+
     </style>
 
 </head>
 <body>
-    <div class="mt-3">
+    <div class="mt-3">        
         <form asp-action="Create" id="registerform" class="card mx-auto" style="width:50rem; min-height:45rem;max-height:52rem;">
+            <div>
+                <a style="float:right;" href='@Url.Action("Login","Login")' class="btn">
+                    <i class="fa fa-close text-secondary"></i>
+                </a>
+            </div>
             <div class="mx-auto mt-3">
                 <img class="rounded-circle" style="width:60px;height:60px;" src="https://media-exp1.licdn.com/dms/image/C560BAQEiT9Jlibun6A/company-logo_200_200/0/1623866540247?e=2159024400&v=beta&t=MQLvPyJh2DeKWoruvGd8-EJbh1yyUKCgIWezMuuxphc" alt="logo" />
             </div>
@@ -73,9 +79,10 @@
                 <div class="col-md-6 ps-5 pt-2">
                     <label>User Name</label>
                     <span class="text-danger">*</span>
-                    <input asp-for="Username" type="text" class="mb-1 form-control required " placeholder="Adam10" id="username" autocomplete="off" />
+                    <input asp-for="Username" type="text" class="mb-1 form-control required checkusername" placeholder="Adam10" id="username" autocomplete="off" />
                     @*<span asp-validation-for="Username" class="text-danger"></span>*@
                     <div class="usernameautosuggestion"></div>
+                    @*<div id="usernamecmt" class="usernamemsg"></div>*@
                 </div>
                 <div class="col-md-6 pe-5 pt-2">
                     <label>Email Address</label>
@@ -91,8 +98,8 @@
                         <label>Password</label>
                         <span class="text-danger">*</span>
                         <input asp-for="Password" type="password" class="mb-1 form-control required checkpassword" placeholder="Password" id="password">
-                        <span class="show-password" onclick="Passwordtoggle()">
-                            <i class="fa fa-eye" onclick="myFunction(this)"></i>
+                        <span class="show-password">
+                            <i class="fa fa-eye-slash" onclick="Passwordtoggle(this)"></i>
                         </span>
                         <div id="cmt" class="comment"></div>
                     </div>
@@ -102,9 +109,9 @@
                     <div class="icon-div">
                         <label>Confirm Password</label>
                         <span class="text-danger">*</span>
-                        <input asp-for="ConfirmPassword" type="password" class="mb-1 form-control required confirmpassword" placeholder="Password" id="confirmpassword">
-                        <span class="show-confirmpassword" onclick="ConfirmPasswordtoggle()">
-                            <i class="fa fa-eye" onclick="myFunction(this)"></i>
+                        <input asp-for="ConfirmPassword" type="password" class="mb-1 form-control required confirmpassword" placeholder="Confirm Password" id="confirmpassword">
+                        <span class="show-confirmpassword">
+                            <i class="fa fa-eye-slash"  onclick="ConfirmPasswordtoggle(this)"></i>
                         </span>
                         <div id="cmtcp" class="commentcp"> </div>
                         @*<span asp-validation-for="ConfirmPassword" class="text-danger"></span>*@
@@ -131,13 +138,13 @@
                     <input asp-for="Answer" type="text" class="mb-1 form-control required" placeholder="Type your answer" id="securityanswer">
                     <span asp-validation-for="Answer" class="text-danger"></span>
                 </div>
-            </div>
-            <div class="row">
-                <div id="captcha" class="g-recaptcha col-6 pt-4" style="margin-left:240px;" data-sitekey="6LcPWWoeAAAAAFIldRnz5zDmQNfXOKvxTn9Fh29N" data-callback="recaptcha_callback">
+                <div class="col-md-6 pt-2" >
+                    <div id="captcha" class="g-recaptcha" style="margin-left:240px;" data-sitekey="6LcPWWoeAAAAAFIldRnz5zDmQNfXOKvxTn9Fh29N" data-callback="recaptcha_callback">
+                    </div>
                 </div>
             </div>
             <div class="pt-3 mx-md-auto">
-                <input type="submit" id="registerBtn" value="Register" class="btn btn-lg btn-primary ms-1  me-3 toggle-disabled" disabled/>
+                <input type="submit" id="registerBtn" value="Register" class="btn btn-lg btn-primary ms-1  me-3 toggle-disabled" disabled />
                 <input type="button" value="Reset" class="btn btn-lg btn-secondary" onclick="resetbtn()" />
             </div>
             <div class="ms-5 ps-5 mt-3" style="font-weight:500;">

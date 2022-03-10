@@ -472,7 +472,6 @@ C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Cli
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\bin\Debug\net5.0\Microsoft.OpenApi.dll
-C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\CmsClient.csproj.AssemblyReference.cache
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\CmsClient.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\CmsClient.AssemblyInfoInputs.cache
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\CmsClient.AssemblyInfo.cs
@@ -519,7 +518,6 @@ C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Cli
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Proxies.dll
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\bin\Debug\net5.0\Castle.Core.dll
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\Razor\Views\User\Create.cshtml.g.cs
-C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\Razor\Views\User\Activate.cshtml.g.cs
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\Razor\Views\User\Forgotpassword.cshtml.g.cs
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\Razor\Views\User\ResetPassword.cshtml.g.cs
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\Razor\Views\Appointment\Edit.cshtml.g.cs
@@ -819,3 +817,5 @@ C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Cli
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\Razor\Views\User\_EmailValidation.cshtml.g.cs
 C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\Razor\Views\User\_UsernameAutoSuggestion.cshtml.g.cs
+C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\Razor\Views\User\Activate.cshtml.g.cs
+C:\Users\DURGA-1\source\repos\Clinic-Management-System-Using-WebAPI-with-MVC-Client-master\CmsClient\CmsClient\obj\Debug\net5.0\CmsClient.csproj.AssemblyReference.cache
